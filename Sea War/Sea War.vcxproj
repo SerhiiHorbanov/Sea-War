@@ -127,7 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Sea War.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SeaMap.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SeaMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,6 +3,8 @@
 
 SeaMap P1Map;
 SeaMap P2Map;
+SeaMap* AttackingPlayer;
+SeaMap* AttackedPlayer;
 
 int SeaMap::GetPositionIndex(const std::pair<int, int> position) const
 {

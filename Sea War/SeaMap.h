@@ -38,7 +38,4 @@ struct SeaMap
 extern SeaMap P1Map;
 extern SeaMap P2Map;
 
-namespace
-{
-    const std::pair<int, int> mapSize = std::pair<int, int>(10, 10);
-}
+const std::pair<int, int> mapSize = std::pair<int, int>(10, 10);

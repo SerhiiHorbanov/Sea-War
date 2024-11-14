@@ -3,6 +3,6 @@
 
 void Initialization()
 {
-    P1SeaMap = GenerateRandomSeaMap(mapSize);
-    P2SeaMap = GenerateRandomSeaMap(mapSize);
+    P1Map = SeaMap::GenerateRandomSeaMap(mapSize);
+    P2Map = SeaMap::GenerateRandomSeaMap(mapSize);
 }

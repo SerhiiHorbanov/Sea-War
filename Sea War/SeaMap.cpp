@@ -1,18 +1,22 @@
 #include "SeaMap.h"
 #include <random>
 
-bool IsInBounds(const std::pair<int, int> position, const std::vector<TileType>& seaMap, const int width)
+int GetPositionIndex(const std::pair<int, int> position, const int width)
 {
     const int yOffset = position.second * width;
     const int xOffset = position.first;
-    return seaMap.size() >= yOffset + xOffset;
+    return yOffset + xOffset;
+}
+
+bool IsInBounds(const std::pair<int, int> position, const std::vector<TileType>& seaMap, const int width)
+{
+    return seaMap.size() >= GetPositionIndex(position, width);
 }
 
 TileType GetTile(const std::pair<int, int> position, const std::vector<TileType>& seaMap, const int width)
 {
-    const int yOffset = position.second * width;
-    const int xOffset = position.first;
-    return seaMap[yOffset + xOffset];
+    const int index = GetPositionIndex(position, width);
+    return seaMap[index];
 }
 
 char GetTileChar(const std::pair<int, int> position, const std::vector<TileType>& seaMap, const int width)
@@ -22,9 +26,8 @@ char GetTileChar(const std::pair<int, int> position, const std::vector<TileType>
 
 void SetTile(const std::pair<int, int> position, std::vector<TileType>& seaMap, const int width, TileType newTile)
 {
-    const int yOffset = position.second * width;
-    const int xOffset = position.first;
-    seaMap[yOffset + xOffset] = newTile;
+    const int index = GetPositionIndex(position, width);
+    seaMap[index] = newTile;
 }
 
 void ShootAtTile(const std::pair<int, int> position, std::vector<TileType>& seaMap, const int width)

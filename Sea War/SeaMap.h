@@ -14,6 +14,7 @@ const std::pair<int, int> mapSize = std::pair<int, int>(10, 10);
 std::vector<TileType> P1SeaMap;
 std::vector<TileType> P2SeaMap;
 
+int GetPositionIndex(const std::pair<int, int> position, const int width);
 bool IsInBounds(const std::pair<int, int> position, const std::vector<TileType>& seaMap, const int width);
 
 TileType GetTile(const std::pair<int, int> position, const std::vector<TileType>& seaMap, const int width);

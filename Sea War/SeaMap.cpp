@@ -12,26 +12,31 @@ int SeaMap::GetPositionIndex(const std::pair<int, int> position) const
     const int xOffset = position.first;
     return yOffset + xOffset;
 }
+
 bool SeaMap::IsInBounds(const std::pair<int, int> position) const
 {
     bool isXInBounds = position.first >= 0 && position.first < size.first;
     bool isYInBounds = position.second >= 0 && position.second < size.second;
     return isXInBounds && isYInBounds;
 }
+
 SeaMap::TileType SeaMap::GetTile(const std::pair<int, int> position) const
 {
     const int index = GetPositionIndex(position);
     return tiles[index];
 }
+
 char SeaMap::GetTileChar(const std::pair<int, int> position) const
 {
     return (char)GetTile(position);
 }
+
 void SeaMap::SetTile(const std::pair<int, int> position, TileType newTile)
 {
     const int index = GetPositionIndex(position);
     tiles[index] = newTile;
 }
+
 void SeaMap::ShootAtTile(const std::pair<int, int> position)
 {
     if (GetTile(position) == TileType::Warship)
@@ -56,9 +61,3 @@ SeaMap SeaMap::GenerateRandomSeaMap(const std::pair<int, int> size)
 
     return SeaMap(tiles, size);
 }
-
-/*namespace
-{
-    SeaMap P1SeaMap = SeaMap();
-    SeaMap P2SeaMap = SeaMap();
-}*/

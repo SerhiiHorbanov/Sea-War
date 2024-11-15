@@ -11,7 +11,7 @@ void Render()
 std::string GetImage()
 {
     std::string result;
-    const int reserving = GetExpectedImageLength();
+    const int reserving = EvaluateImageLength();
     result.reserve(reserving);
     
     result += CurrentPlayerMapText;
@@ -31,7 +31,7 @@ std::string GetImage()
     return result;
 }
 
-int GetExpectedImageLength()
+int EvaluateImageLength()
 {
     int result = 0;
     result += CurrentPlayerMapText.length();

@@ -10,5 +10,5 @@ const std::string AskingPlayerWhereToShootText = "Where would you like to shoot?
 void Render();
 
 std::string GetImage();
-int GetExpectedImageLength();
+int EvaluateImageLength();
 std::string GetMapRowText(const SeaMap& seaMap, const int y);

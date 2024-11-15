@@ -128,12 +128,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Initialization.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="SeaMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Initialization.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="SeaMap.h" />
   </ItemGroup>

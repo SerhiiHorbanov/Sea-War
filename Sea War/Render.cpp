@@ -22,9 +22,9 @@ std::string GetImage()
 
     for (int y = 0; y < mapSize.second; y++)
     {
-        result += GetMapRowText(P1Map, y);
+        result += GetMapRowText(*AttackingPlayer, y);
         result += GapBetweenMaps;
-        result += GetMapRowText(P2Map, y);
+        result += GetMapRowText(*AttackedPlayer, y);
         result += '\n';
     }
 
@@ -46,7 +46,7 @@ int GetExpectedImageLength()
     return result;
 }
 
-std::string GetMapRowText(const SeaMap seaMap, const int y)
+std::string GetMapRowText(const SeaMap& seaMap, const int y)
 {
     std::string result;
     result.reserve(seaMap.size.first);

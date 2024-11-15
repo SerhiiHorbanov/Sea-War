@@ -11,4 +11,4 @@ void Render();
 
 std::string GetImage();
 int GetExpectedImageLength();
-std::string GetMapRowText(const SeaMap seaMap, const int y);
+std::string GetMapRowText(const SeaMap& seaMap, const int y);

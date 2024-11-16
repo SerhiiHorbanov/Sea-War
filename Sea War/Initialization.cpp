@@ -6,6 +6,7 @@ void Initialization()
 {
     SetRandomSeed();
     SetRandomSeaMaps();
+    SetAttackingAndAttackedMaps();
 }
 
 void SetRandomSeed()
@@ -17,4 +18,10 @@ void SetRandomSeaMaps()
 {
     P1Map = SeaMap::GenerateRandomSeaMap(mapSize);
     P2Map = SeaMap::GenerateRandomSeaMap(mapSize);
+}
+
+void SetAttackingAndAttackedMaps()
+{
+    AttackingPlayer = &P1Map;
+    AttackedPlayer = &P2Map;
 }

@@ -1,6 +1,7 @@
 #include "Input.h"
 #include <iostream>
 #include <sstream>
+#include "SeaMap.h"
 
 bool isValidShootingPosition;
 std::pair<int, int> shootingPosition;
@@ -17,11 +18,22 @@ void ProcessInput(const std::string& input)
 {
     std::stringstream stream = std::stringstream(input);
     std::string numberText;
+    
+    isValidShootingPosition = true;
+    try
+    {
+        std::getline(stream, numberText, ',');
+        int x = std::stoi(numberText) - 1;
+        std::getline(stream, numberText);
+        int y = std::stoi(numberText) - 1;
 
-    std::getline(stream, numberText, ',');
-    int x = std::stoi(numberText);
-    std::getline(stream, numberText);
-    int y = std::stoi(numberText);
+        shootingPosition = std::pair<int, int>(x, y);
+    }
+    catch(std::invalid_argument exception)
+    {
+        isValidShootingPosition = false;
+    }
 
-    shootingPosition = std::pair<int, int>(x, y);
+    if (!AttackedPlayer->IsInBounds(shootingPosition))
+        isValidShootingPosition = false;
 }

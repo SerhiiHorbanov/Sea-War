@@ -6,6 +6,17 @@ SeaMap P2Map;
 SeaMap* AttackingPlayer;
 SeaMap* AttackedPlayer;
 
+bool SeaMap::ContainsAnyAliveShips() const
+{
+    const int tilesAmount = tiles.size();
+    for (int i = 0; i < tilesAmount; i++)
+    {
+        if (tiles[i] == TileType::Warship)
+            return true;
+    }
+    return false;
+}
+
 int SeaMap::GetPositionIndex(const std::pair<int, int> position) const
 {
     const int yOffset = position.second * size.first;

@@ -3,3 +3,5 @@
 void Update();
 
 void TryShooting();
+
+bool GameContinues();

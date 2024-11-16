@@ -8,7 +8,7 @@ int main()
 {
     Initialization();
 
-    while (true)
+    while (GameContinues())
     {
         Render();
         Input();

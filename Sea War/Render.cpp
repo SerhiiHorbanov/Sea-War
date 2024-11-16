@@ -53,7 +53,7 @@ std::string GetMapRowText(const SeaMap& seaMap, const int y)
 
     for (int x = 0; x < seaMap.size.first; x++)
     {
-        std::pair<int, int> position = std::pair<int, int>(x, y);
+        const std::pair<int, int> position = std::pair<int, int>(x, y);
         
         result += seaMap.GetTileChar(position);
     }

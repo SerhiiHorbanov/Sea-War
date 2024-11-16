@@ -17,19 +17,19 @@ void Input()
 void ProcessInput(const std::string& input)
 {
     std::stringstream stream = std::stringstream(input);
-    std::string numberText;
     
     isValidShootingPosition = true;
     try
     {
+        std::string numberText;
         std::getline(stream, numberText, ',');
-        int x = std::stoi(numberText) - 1;
+        const int x = std::stoi(numberText) - 1;
         std::getline(stream, numberText);
-        int y = std::stoi(numberText) - 1;
+        const int y = std::stoi(numberText) - 1;
 
         shootingPosition = std::pair<int, int>(x, y);
     }
-    catch(std::invalid_argument exception)
+    catch (std::exception exception)
     {
         isValidShootingPosition = false;
     }

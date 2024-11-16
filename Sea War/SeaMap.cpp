@@ -15,8 +15,8 @@ int SeaMap::GetPositionIndex(const std::pair<int, int> position) const
 
 bool SeaMap::IsInBounds(const std::pair<int, int> position) const
 {
-    bool isXInBounds = position.first >= 0 && position.first < size.first;
-    bool isYInBounds = position.second >= 0 && position.second < size.second;
+    const bool isXInBounds = position.first >= 0 && position.first < size.first;
+    const bool isYInBounds = position.second >= 0 && position.second < size.second;
     return isXInBounds && isYInBounds;
 }
 
@@ -54,7 +54,7 @@ SeaMap SeaMap::GenerateRandomSeaMap(const std::pair<int, int> size)
 
     for (int i = 0; i < 10; i++)
     {
-        int index = std::rand() % tilesAmount;
+        const int index = std::rand() % tilesAmount;
 
         tiles[index] = TileType::Warship;
     }

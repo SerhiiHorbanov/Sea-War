@@ -1,18 +1,16 @@
 #include <iostream>
-#include "Initialization.h"
-#include "Input.h"
-#include "Render.h"
-#include "Update.h"
+#include "SeaWar.h"
 
 int main()
 {
-    Initialization();
+    SeaWar game = SeaWar();
+    game.Initialization();
 
-    while (GameContinues())
+    while (game.GameContinues())
     {
-        Render();
-        Input();
-        Update();
+        game.Render();
+        game.Input();
+        game.Update();
     }
 
     return 0;

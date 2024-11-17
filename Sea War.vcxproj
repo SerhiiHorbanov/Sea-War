@@ -128,19 +128,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Initialization.cpp" />
-    <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Render.cpp" />
     <ClCompile Include="SeaMap.cpp" />
-    <ClCompile Include="Update.cpp" />
+    <ClCompile Include="SeaWar.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Initialization.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="Render.h" />
     <ClInclude Include="SeaMap.h" />
-    <ClInclude Include="Update.h" />
+    <ClInclude Include="SeaWar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

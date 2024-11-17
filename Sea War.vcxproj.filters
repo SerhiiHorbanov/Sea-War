@@ -21,16 +21,7 @@
     <ClCompile Include="SeaMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Initialization.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Update.cpp">
+    <ClCompile Include="SeaWar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,16 +29,7 @@
     <ClInclude Include="SeaMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Initialization.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Update.h">
+    <ClInclude Include="SeaWar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -38,9 +38,4 @@ struct SeaMap
     static SeaMap GenerateRandomSeaMap(const std::pair<int, int> size);
 };
 
-extern SeaMap P1Map;
-extern SeaMap P2Map;
-extern SeaMap* AttackingPlayer;
-extern SeaMap* AttackedPlayer;
-
 const std::pair<int, int> mapSize = std::pair<int, int>(10, 10);

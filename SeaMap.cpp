@@ -1,11 +1,6 @@
 #include "SeaMap.h"
 #include <random>
 
-SeaMap P1Map;
-SeaMap P2Map;
-SeaMap* AttackingPlayer;
-SeaMap* AttackedPlayer;
-
 bool SeaMap::ContainsAnyAliveShips() const
 {
     const int tilesAmount = tiles.size();

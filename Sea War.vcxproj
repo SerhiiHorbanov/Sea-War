@@ -129,12 +129,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SeaMap.cpp" />
-    <ClCompile Include="SeaWar.cpp" />
+    <ClCompile Include="Source\SeaMap.cpp" />
+    <ClCompile Include="Source\SeaWar.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SeaMap.h" />
-    <ClInclude Include="SeaWar.h" />
+    <ClInclude Include="Source\SeaMap.h" />
+    <ClInclude Include="Source\SeaWar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

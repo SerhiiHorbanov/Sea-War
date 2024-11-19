@@ -140,11 +140,15 @@ void SeaWar::Update()
 
 void SeaWar::TryShooting()
 {
-    if (isValidShootingPosition)
-    {
-        AttackedPlayer->ShootAtTile(shootingPosition);
-        std::swap(AttackingPlayer, AttackedPlayer);
-    }
+    if (!isValidShootingPosition)
+        return;
+
+    MapShootingResult shootingResult = AttackedPlayer->ShootAtTile(shootingPosition);
+
+    if (shootingResult == MapShootingResult::ShipDestroyed)
+        return;
+
+    std::swap(AttackingPlayer, AttackedPlayer);
 }
 
 bool SeaWar::GameContinues()

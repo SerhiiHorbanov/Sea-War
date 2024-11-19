@@ -2,6 +2,12 @@
 #include <tuple>
 #include <vector>
 
+enum class MapShootingResult
+{
+    Miss,
+    ShipDestroyed
+};
+
 struct SeaMap
 {
     enum class TileType : char
@@ -15,7 +21,8 @@ struct SeaMap
     std::pair<int, int> size;
     bool AnyShipsLeft;
 
-    SeaMap()
+    SeaMap() :
+        AnyShipsLeft(false)
     {}
 
     SeaMap(const std::vector<TileType>& tiles, const std::pair<int, int>& size, bool anyShipsLeft) : 
@@ -34,7 +41,7 @@ struct SeaMap
     char GetTileChar(const std::pair<int, int> position) const;
 
     void SetTile(const std::pair<int, int> position, TileType newTile);
-    void ShootAtTile(const std::pair<int, int> position);
+    MapShootingResult ShootAtTile(const std::pair<int, int> position);
 
     static SeaMap GenerateRandomSeaMap(const std::pair<int, int> size);
 };

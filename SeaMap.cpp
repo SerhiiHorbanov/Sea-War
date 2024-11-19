@@ -48,13 +48,16 @@ void SeaMap::SetTile(const std::pair<int, int> position, TileType newTile)
     tiles[index] = newTile;
 }
 
-void SeaMap::ShootAtTile(const std::pair<int, int> position)
+MapShootingResult SeaMap::ShootAtTile(const std::pair<int, int> position)
 {
     if (GetTile(position) == TileType::Warship)
     {
         SetTile(position, TileType::DestroyedWarship);
         UpdateAnyShipsLeft();
+        return MapShootingResult::ShipDestroyed;
     }
+
+    return MapShootingResult::Miss;
 }
 
 // for now just tries to place a warship 10 times

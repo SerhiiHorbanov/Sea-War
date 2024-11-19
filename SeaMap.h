@@ -13,18 +13,19 @@ struct SeaMap
 
     std::vector<TileType> tiles;
     std::pair<int, int> size;
+    bool AnyShipsLeft;
 
-
-    SeaMap() :
-        tiles(),
-        size()
+    SeaMap()
     {}
-    SeaMap(const std::vector<TileType>& tiles, const std::pair<int, int>& size) : 
+
+    SeaMap(const std::vector<TileType>& tiles, const std::pair<int, int>& size, bool anyShipsLeft) : 
         tiles(tiles), 
-        size(size)
+        size(size), 
+        AnyShipsLeft(anyShipsLeft)
     {}
 
-    bool ContainsAnyAliveShips() const;
+    void UpdateAnyShipsLeft();
+    bool ContainsAnyAliveShips();
 
     int GetPositionIndex(const std::pair<int, int> position) const;
     bool IsInBounds(const std::pair<int, int> position) const;

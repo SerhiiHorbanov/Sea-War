@@ -149,5 +149,5 @@ void SeaWar::TryShooting()
 
 bool SeaWar::GameContinues()
 {
-    return P1Map.ContainsAnyAliveShips() && P2Map.ContainsAnyAliveShips();
+    return P1Map.AnyShipsLeft && P2Map.AnyShipsLeft;
 }

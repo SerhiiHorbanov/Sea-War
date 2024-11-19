@@ -1,7 +1,12 @@
 #include "SeaMap.h"
 #include <random>
 
-bool SeaMap::ContainsAnyAliveShips() const
+void SeaMap::UpdateAnyShipsLeft()
+{
+    AnyShipsLeft = ContainsAnyAliveShips();
+}
+
+bool SeaMap::ContainsAnyAliveShips()
 {
     const int tilesAmount = tiles.size();
     for (int i = 0; i < tilesAmount; i++)
@@ -46,7 +51,10 @@ void SeaMap::SetTile(const std::pair<int, int> position, TileType newTile)
 void SeaMap::ShootAtTile(const std::pair<int, int> position)
 {
     if (GetTile(position) == TileType::Warship)
+    {
         SetTile(position, TileType::DestroyedWarship);
+        UpdateAnyShipsLeft();
+    }
 }
 
 // for now just tries to place a warship 10 times
@@ -65,5 +73,5 @@ SeaMap SeaMap::GenerateRandomSeaMap(const std::pair<int, int> size)
         tiles[index] = TileType::Warship;
     }
 
-    return SeaMap(tiles, size);
+    return SeaMap(tiles, size, true);
 }

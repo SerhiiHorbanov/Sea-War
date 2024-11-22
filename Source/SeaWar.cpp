@@ -7,6 +7,18 @@ const std::string CurrentEnemyMapText = "Enemy map:";
 const std::string GapBetweenMaps = "          ";
 const std::string AskingPlayerWhereToShootText = "Where would you like to shoot?";
 
+void SeaWar::Run()
+{
+    Initialization();
+
+    while (GameContinues())
+    {
+        Render();
+        Input();
+        Update();
+    }
+}
+
 void SeaWar::Initialization()
 {
     SetRandomSeed();

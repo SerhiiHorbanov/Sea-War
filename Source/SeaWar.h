@@ -13,6 +13,9 @@ class SeaWar
     std::pair<int, int> shootingPosition;
 
 public:
+    void Run();
+
+private:
     void Initialization();
 
     bool GameContinues();
@@ -21,7 +24,6 @@ public:
     void Input();
     void Update();
 
-private:
     void SetRandomSeed();
     void SetRandomSeaMaps();
     void SetAttackingAndAttackedMaps();

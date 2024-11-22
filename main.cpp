@@ -4,14 +4,7 @@
 int main()
 {
     SeaWar game = SeaWar();
-    game.Initialization();
-
-    while (game.GameContinues())
-    {
-        game.Render();
-        game.Input();
-        game.Update();
-    }
+    game.Run();
 
     return 0;
 }

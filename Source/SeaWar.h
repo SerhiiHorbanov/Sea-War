@@ -28,10 +28,6 @@ private:
     void SetRandomSeaMaps();
     void SetAttackingAndAttackedMaps();
 
-    std::string GetImage();
-    void DisplayImage(std::string image);
-    int EvaluateImageLength();
-
     std::string GetInput();
     void ProcessInput(const std::string& input);
 

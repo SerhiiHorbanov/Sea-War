@@ -1,11 +1,7 @@
 #include "SeaWar.h"
 #include <iostream>
 #include <sstream>
-
-const std::string CurrentPlayerMapText = "Your map:";
-const std::string CurrentEnemyMapText = "Enemy map:";
-const std::string GapBetweenMaps = "          ";
-const std::string AskingPlayerWhereToShootText = "Where would you like to shoot?";
+#include "Image.h"
 
 void SeaWar::Run()
 {
@@ -45,52 +41,8 @@ void SeaWar::SetAttackingAndAttackedMaps()
 
 void SeaWar::Render()
 {
-    std::string newImage = GetImage();
-    DisplayImage(newImage);
-}
-
-void SeaWar::DisplayImage(std::string image)
-{
-    std::system("cls");
-    std::cout << image;
-}
-
-std::string SeaWar::GetImage()
-{
-    std::string result;
-    const int reserving = EvaluateImageLength();
-    result.reserve(reserving);
-
-    result += CurrentPlayerMapText;
-    const int GapBetweenPlayerTextsLength = mapSize.first + GapBetweenMaps.length() - CurrentPlayerMapText.length();
-    result += std::string(GapBetweenPlayerTextsLength, ' ');
-    result += CurrentEnemyMapText;
-    result += '\n';
-
-    for (int y = 0; y < mapSize.second; y++)
-    {
-        result += AttackingPlayer->GetMapRowText(y);
-        result += GapBetweenMaps;
-        result += AttackedPlayer->GetMapRowText(y);
-        result += '\n';
-    }
-
-    return result;
-}
-
-int SeaWar::EvaluateImageLength()
-{
-    int result = 0;
-    result += CurrentPlayerMapText.length();
-    result += CurrentEnemyMapText.length();
-    result++;// newline
-    result += GapBetweenMaps.length() * mapSize.second;// all the gaps between map rows
-    result += mapSize.first * 2 * mapSize.second;// both map widths and newlines for each map row
-    result += mapSize.second;// newlines between rows of maps
-    result++;// newline
-    result += AskingPlayerWhereToShootText.length();
-
-    return result;
+    Image newImage = Image::GenerateImage(*AttackingPlayer, *AttackedPlayer);
+    newImage.Display();
 }
 
 void SeaWar::Input()

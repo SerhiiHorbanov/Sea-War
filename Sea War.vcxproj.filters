@@ -18,18 +18,24 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SeaMap.cpp">
+    <ClCompile Include="Source\SeaMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SeaWar.cpp">
+    <ClCompile Include="Source\SeaWar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SeaMap.h">
+    <ClInclude Include="Source\SeaMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SeaWar.h">
+    <ClInclude Include="Source\SeaWar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

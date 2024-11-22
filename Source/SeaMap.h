@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <tuple>
 #include <vector>
 
@@ -39,6 +40,7 @@ struct SeaMap
 
     TileType GetTile(const std::pair<int, int> position) const;
     char GetTileChar(const std::pair<int, int> position) const;
+    std::string GetMapRowText(const int y) const;
 
     void SetTile(const std::pair<int, int> position, TileType newTile);
     MapShootingResult ShootAtTile(const std::pair<int, int> position);

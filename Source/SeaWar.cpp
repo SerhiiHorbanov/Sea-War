@@ -69,9 +69,9 @@ std::string SeaWar::GetImage()
 
     for (int y = 0; y < mapSize.second; y++)
     {
-        result += GetMapRowText(*AttackingPlayer, y);
+        result += AttackingPlayer->GetMapRowText(y);
         result += GapBetweenMaps;
-        result += GetMapRowText(*AttackedPlayer, y);
+        result += AttackedPlayer->GetMapRowText(y);
         result += '\n';
     }
 
@@ -89,21 +89,6 @@ int SeaWar::EvaluateImageLength()
     result += mapSize.second;// newlines between rows of maps
     result++;// newline
     result += AskingPlayerWhereToShootText.length();
-
-    return result;
-}
-
-std::string SeaWar::GetMapRowText(const SeaMap& seaMap, const int y)
-{
-    std::string result;
-    result.reserve(seaMap.size.first);
-
-    for (int x = 0; x < seaMap.size.first; x++)
-    {
-        const std::pair<int, int> position = std::pair<int, int>(x, y);
-
-        result += seaMap.GetTileChar(position);
-    }
 
     return result;
 }

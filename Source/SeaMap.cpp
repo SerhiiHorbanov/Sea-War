@@ -42,6 +42,21 @@ char SeaMap::GetTileChar(const std::pair<int, int> position) const
     return (char)GetTile(position);
 }
 
+std::string SeaMap::GetMapRowText(const int y) const
+{
+    std::string result;
+    result.reserve(size.first);
+
+    for (int x = 0; x < size.first; x++)
+    {
+        const std::pair<int, int> position = std::pair<int, int>(x, y);
+
+        result += GetTileChar(position);
+    }
+
+    return result;
+}
+
 void SeaMap::SetTile(const std::pair<int, int> position, TileType newTile)
 {
     const int index = GetPositionIndex(position);

@@ -1,4 +1,4 @@
-#include "Image.h"
+#include "FrameRender.h"
 #include <iostream>
 
 const std::string CurrentPlayerMapText = "Your map:";
@@ -6,13 +6,13 @@ const std::string CurrentEnemyMapText = "Enemy map:";
 const std::string GapBetweenMaps = "          ";
 const std::string AskingPlayerWhereToShootText = "Where would you like to shoot?";
 
-void Image::ReserveMemory()
+void FrameRender::ReserveMemory()
 {
     const int lengthReserving = EvaluateImageLength();
     text.reserve(lengthReserving);
 }
 
-int Image::EvaluateImageLength()
+int FrameRender::EvaluateImageLength()
 {
     int result = 0;
 
@@ -28,9 +28,9 @@ int Image::EvaluateImageLength()
     return result;
 }
 
-Image Image::GenerateImage(SeaMap& AttackingPlayer, SeaMap& AttackedPlayer)
+FrameRender FrameRender::Render(SeaMap& AttackingPlayer, SeaMap& AttackedPlayer)
 {
-    Image result = Image();
+    FrameRender result = FrameRender();
 
     result.ReserveMemory();
     result.AddPlayerTextsLine();
@@ -39,13 +39,13 @@ Image Image::GenerateImage(SeaMap& AttackingPlayer, SeaMap& AttackedPlayer)
     return result;
 }
 
-void Image::Display()
+void FrameRender::Display()
 {
     std::system("cls");
     std::cout << text;
 }
 
-void Image::AddPlayerTextsLine()
+void FrameRender::AddPlayerTextsLine()
 {
     text += CurrentPlayerMapText;
     const int GapBetweenPlayerTextsLength = mapSize.first + GapBetweenMaps.length() - CurrentPlayerMapText.length();
@@ -54,7 +54,7 @@ void Image::AddPlayerTextsLine()
     text += '\n';
 }
 
-void Image::AddPlayersMapsLines(SeaMap& AttackingPlayer, SeaMap& AttackedPlayer)
+void FrameRender::AddPlayersMapsLines(SeaMap& AttackingPlayer, SeaMap& AttackedPlayer)
 {
     for (int y = 0; y < mapSize.second; y++)
     {

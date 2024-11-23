@@ -129,12 +129,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Source\Image.cpp" />
+    <ClCompile Include="Source\FrameRender.cpp" />
     <ClCompile Include="Source\SeaMap.cpp" />
     <ClCompile Include="Source\SeaWar.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Image.h" />
+    <ClInclude Include="Source\FrameRender.h" />
     <ClInclude Include="Source\SeaMap.h" />
     <ClInclude Include="Source\SeaWar.h" />
   </ItemGroup>

@@ -1,7 +1,7 @@
 #include "SeaWar.h"
 #include <iostream>
 #include <sstream>
-#include "Image.h"
+#include "FrameRender.h"
 
 void SeaWar::Run()
 {
@@ -39,10 +39,15 @@ void SeaWar::SetAttackingAndAttackedMaps()
     AttackedPlayer = &P2Map;
 }
 
+FrameRender SeaWar::GenerateImage()
+{
+    return FrameRender::Render(*AttackingPlayer, *AttackedPlayer);
+}
+
 void SeaWar::Render()
 {
-    Image newImage = Image::GenerateImage(*AttackingPlayer, *AttackedPlayer);
-    newImage.Display();
+    FrameRender render = FrameRender::Render(*AttackingPlayer, *AttackedPlayer);
+    render.Display();
 }
 
 void SeaWar::Input()

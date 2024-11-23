@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "FrameRender.h"
 #include "SeaMap.h"
 
 class SeaWar
@@ -27,6 +28,8 @@ private:
     void SetRandomSeed();
     void SetRandomSeaMaps();
     void SetAttackingAndAttackedMaps();
+
+    FrameRender GenerateImage();
 
     std::string GetInput();
     void ProcessInput(const std::string& input);

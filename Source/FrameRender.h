@@ -2,14 +2,14 @@
 #include <string>
 #include "SeaMap.h"
 
-struct Image
+struct FrameRender
 {
 public:
     std::string text;
 
-    Image() = default;
+    FrameRender() = default;
 
-    static Image GenerateImage(SeaMap& AttackingPlayer, SeaMap& AttackedPlayer);
+    static FrameRender Render(SeaMap& AttackingPlayer, SeaMap& AttackedPlayer);
     void Display();
 
     void ReserveMemory();
@@ -17,5 +17,4 @@ public:
 
     void AddPlayerTextsLine();
     void AddPlayersMapsLines(SeaMap& AttackingPlayer, SeaMap& AttackedPlayer);
-
 };

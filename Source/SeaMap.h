@@ -26,7 +26,7 @@ struct SeaMap
             Type(type),
             WasShot(false)
         {}
-        char GetChar() const;
+        char GetChar(const bool useFogOfWar) const;
     };
 
     std::vector<Tile> tiles;
@@ -50,8 +50,8 @@ struct SeaMap
     bool IsInBounds(const std::pair<int, int> position) const;
 
     Tile& GetTile(const std::pair<int, int> position);
-    char GetTileChar(const std::pair<int, int> position) const;
-    std::string GetMapRowText(const int y) const;
+    char GetTileChar(const std::pair<int, int> position, const bool fogOfWar) const;
+    std::string GetMapRowText(const int y, const bool fogOfWar) const;
 
     MapShootingResult ShootAtTile(const std::pair<int, int> position);
 

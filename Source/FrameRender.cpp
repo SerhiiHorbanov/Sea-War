@@ -58,9 +58,9 @@ void FrameRender::AddPlayersMapsLines(SeaMap& AttackingPlayer, SeaMap& AttackedP
 {
     for (int y = 0; y < mapSize.second; y++)
     {
-        text += AttackingPlayer.GetMapRowText(y);
+        text += AttackingPlayer.GetMapRowText(y, false);
         text += GapBetweenMaps;
-        text += AttackedPlayer.GetMapRowText(y);
+        text += AttackedPlayer.GetMapRowText(y, true);
         text += '\n';
     }
 }

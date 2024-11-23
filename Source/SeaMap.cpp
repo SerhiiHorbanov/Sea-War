@@ -1,6 +1,13 @@
 #include "SeaMap.h"
 #include <random>
 
+constexpr std::pair<char, char> tileTextures[] =
+{
+    {'~', '~'},// TileType::Sea
+    {'W', 'x'},// TileType::Warship
+};
+constexpr char fogOfWarChar = '#';
+
 void SeaMap::UpdateAnyShipsLeft()
 {
     AnyShipsLeft = ContainsAnyAliveShips();
@@ -38,15 +45,15 @@ SeaMap::Tile& SeaMap::GetTile(const std::pair<int, int> position)
     return tiles[index];
 }
 
-char SeaMap::GetTileChar(const std::pair<int, int> position) const
+char SeaMap::GetTileChar(const std::pair<int, int> position, const bool fogOfWar) const
 {
     const int index = GetPositionIndex(position);
     const Tile tile = tiles[index];
 
-    return tile.GetChar();
+    return tile.GetChar(fogOfWar);
 }
 
-std::string SeaMap::GetMapRowText(const int y) const
+std::string SeaMap::GetMapRowText(const int y, const bool fogOfWar) const
 {
     std::string result;
     result.reserve(size.first);
@@ -55,7 +62,7 @@ std::string SeaMap::GetMapRowText(const int y) const
     {
         const std::pair<int, int> position = std::pair<int, int>(x, y);
 
-        result += GetTileChar(position);
+        result += GetTileChar(position, fogOfWar);
     }
 
     return result;
@@ -94,13 +101,10 @@ SeaMap SeaMap::GenerateRandomSeaMap(const std::pair<int, int> size)
     return SeaMap(tiles, size, true);
 }
 
-char SeaMap::Tile::GetChar() const
+char SeaMap::Tile::GetChar(const bool fogOfWar) const
 {
-    constexpr const std::pair<char, char> tileTextures[] =
-    {
-        {'~', '~'},// TileType::Sea
-        {'W', 'x'},// TileType::Warship
-    };
+    if (fogOfWar && !WasShot)
+        return fogOfWarChar;
 
     std::pair<char, char> currentTilePossibleTextures = tileTextures[(int)Type];
 

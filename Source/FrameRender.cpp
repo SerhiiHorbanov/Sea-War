@@ -28,7 +28,7 @@ int FrameRender::EvaluateImageLength()
     return result;
 }
 
-FrameRender FrameRender::Render(SeaMap& AttackingPlayer, SeaMap& AttackedPlayer)
+FrameRender FrameRender::Render(const SeaMap& AttackingPlayer, const SeaMap& AttackedPlayer)
 {
     FrameRender result = FrameRender();
 
@@ -39,7 +39,7 @@ FrameRender FrameRender::Render(SeaMap& AttackingPlayer, SeaMap& AttackedPlayer)
     return result;
 }
 
-void FrameRender::Display()
+void FrameRender::Display() const
 {
     std::system("cls");
     std::cout << text;
@@ -54,7 +54,7 @@ void FrameRender::AddPlayerTextsLine()
     text += '\n';
 }
 
-void FrameRender::AddPlayersMapsLines(SeaMap& AttackingPlayer, SeaMap& AttackedPlayer)
+void FrameRender::AddPlayersMapsLines(const SeaMap& AttackingPlayer, const SeaMap& AttackedPlayer)
 {
     for (int y = 0; y < mapSize.second; y++)
     {

@@ -39,24 +39,24 @@ void SeaWar::SetAttackingAndAttackedMaps()
     AttackedPlayer = &P2Map;
 }
 
+void SeaWar::Render()
+{
+    const FrameRender render = GenerateImage();
+    render.Display();
+}
+
 FrameRender SeaWar::GenerateImage()
 {
     return FrameRender::Render(*AttackingPlayer, *AttackedPlayer);
 }
 
-void SeaWar::Render()
-{
-    FrameRender render = FrameRender::Render(*AttackingPlayer, *AttackedPlayer);
-    render.Display();
-}
-
 void SeaWar::Input()
 {
-    std::string input = GetInput();
+    const std::string input = EnterInput();
     ProcessInput(input);
 }
 
-std::string SeaWar::GetInput()
+std::string SeaWar::EnterInput()
 {
     std::string input;
     std::getline(std::cin, input);
@@ -97,7 +97,7 @@ void SeaWar::TryShooting()
     if (!isValidShootingPosition)
         return;
 
-    MapShootingResult shootingResult = AttackedPlayer->ShootAtTile(shootingPosition);
+    const MapShootingResult shootingResult = AttackedPlayer->ShootAtTile(shootingPosition);
 
     if (shootingResult == MapShootingResult::ShipShot)
         return;

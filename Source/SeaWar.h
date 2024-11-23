@@ -31,7 +31,7 @@ private:
 
     FrameRender GenerateImage();
 
-    std::string GetInput();
+    std::string EnterInput();
     void ProcessInput(const std::string& input);
 
     void TryShooting();

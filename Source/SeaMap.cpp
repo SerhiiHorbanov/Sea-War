@@ -1,12 +1,12 @@
 #include "SeaMap.h"
 #include <random>
 
-constexpr std::pair<char, char> tileTextures[] =
+const std::pair<char, char> tileTextures[] =
 {
     {'~', '~'},// TileType::Sea
     {'W', 'x'},// TileType::Warship
 };
-constexpr char fogOfWarChar = '#';
+const char fogOfWarChar = '#';
 
 void SeaMap::UpdateAnyShipsLeft()
 {
@@ -16,6 +16,7 @@ void SeaMap::UpdateAnyShipsLeft()
 bool SeaMap::ContainsAnyAliveShips()
 {
     const int tilesAmount = tiles.size();
+
     for (int i = 0; i < tilesAmount; i++)
     {
         if (tiles[i].Type == TileType::Warship)
@@ -106,7 +107,7 @@ char SeaMap::Tile::GetChar(const bool fogOfWar) const
     if (fogOfWar && !WasShot)
         return fogOfWarChar;
 
-    std::pair<char, char> currentTilePossibleTextures = tileTextures[(int)Type];
+    const std::pair<char, char> currentTilePossibleTextures = tileTextures[(int)Type];
 
     return WasShot ? currentTilePossibleTextures.second : currentTilePossibleTextures.first;
 }

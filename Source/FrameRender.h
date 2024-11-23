@@ -9,12 +9,12 @@ public:
 
     FrameRender() = default;
 
-    static FrameRender Render(SeaMap& AttackingPlayer, SeaMap& AttackedPlayer);
-    void Display();
+    static FrameRender Render(const SeaMap& AttackingPlayer, const SeaMap& AttackedPlayer);
+    void Display() const;
 
     void ReserveMemory();
     int EvaluateImageLength();
 
     void AddPlayerTextsLine();
-    void AddPlayersMapsLines(SeaMap& AttackingPlayer, SeaMap& AttackedPlayer);
+    void AddPlayersMapsLines(const SeaMap& AttackingPlayer, const SeaMap& AttackedPlayer);
 };

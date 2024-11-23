@@ -26,7 +26,9 @@ struct SeaMap
             Type(type),
             WasShot(false)
         {}
+        
         char GetChar(const bool useFogOfWar) const;
+        MapShootingResult TakeShot();
     };
 
     std::vector<Tile> tiles;

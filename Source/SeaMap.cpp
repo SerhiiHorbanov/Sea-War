@@ -72,15 +72,13 @@ std::string SeaMap::GetMapRowText(const int y, const bool fogOfWar) const
 MapShootingResult SeaMap::ShootAtTile(const std::pair<int, int> position)
 {
     Tile& tile = GetTile(position);
-    tile.WasShot = true;
-    
-    if (tile.Type == TileType::Warship)
-    {
-        UpdateAnyShipsLeft();
-        return MapShootingResult::ShipShot;
-    }
 
-    return MapShootingResult::Miss;
+    MapShootingResult shootingResult = tile.TakeShot();
+
+    if (shootingResult == MapShootingResult::ShipShot)
+        UpdateAnyShipsLeft();
+
+    return shootingResult;
 }
 
 // for now just tries to place a warship 10 times
@@ -110,4 +108,14 @@ char SeaMap::Tile::GetChar(const bool fogOfWar) const
     const std::pair<char, char> currentTilePossibleTextures = tileTextures[(int)Type];
 
     return WasShot ? currentTilePossibleTextures.second : currentTilePossibleTextures.first;
+}
+
+MapShootingResult SeaMap::Tile::TakeShot()
+{
+    WasShot = true;
+
+    if (Type == TileType::Warship)
+        return MapShootingResult::ShipShot;
+
+    return MapShootingResult::Miss;
 }

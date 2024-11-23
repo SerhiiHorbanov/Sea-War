@@ -35,5 +35,7 @@ private:
     void ProcessInput(const std::string& input);
 
     void TryShooting();
+    void Shoot();
+    void SwapAttackingPlayer();
 };
 

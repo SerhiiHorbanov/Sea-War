@@ -11,7 +11,7 @@ bool SeaMap::ContainsAnyAliveShips()
     const int tilesAmount = tiles.size();
     for (int i = 0; i < tilesAmount; i++)
     {
-        if (tiles[i] == TileType::Warship)
+        if (tiles[i].Type == TileType::Warship)
             return true;
     }
     return false;
@@ -31,15 +31,19 @@ bool SeaMap::IsInBounds(const std::pair<int, int> position) const
     return isXInBounds && isYInBounds;
 }
 
-SeaMap::TileType SeaMap::GetTile(const std::pair<int, int> position) const
+SeaMap::Tile& SeaMap::GetTile(const std::pair<int, int> position)
 {
     const int index = GetPositionIndex(position);
+
     return tiles[index];
 }
 
 char SeaMap::GetTileChar(const std::pair<int, int> position) const
 {
-    return (char)GetTile(position);
+    const int index = GetPositionIndex(position);
+    const Tile tile = tiles[index];
+
+    return tile.GetChar();
 }
 
 std::string SeaMap::GetMapRowText(const int y) const
@@ -57,19 +61,15 @@ std::string SeaMap::GetMapRowText(const int y) const
     return result;
 }
 
-void SeaMap::SetTile(const std::pair<int, int> position, TileType newTile)
-{
-    const int index = GetPositionIndex(position);
-    tiles[index] = newTile;
-}
-
 MapShootingResult SeaMap::ShootAtTile(const std::pair<int, int> position)
 {
-    if (GetTile(position) == TileType::Warship)
+    Tile& tile = GetTile(position);
+    tile.WasShot = true;
+    
+    if (tile.Type == TileType::Warship)
     {
-        SetTile(position, TileType::DestroyedWarship);
         UpdateAnyShipsLeft();
-        return MapShootingResult::ShipDestroyed;
+        return MapShootingResult::ShipShot;
     }
 
     return MapShootingResult::Miss;
@@ -79,7 +79,7 @@ MapShootingResult SeaMap::ShootAtTile(const std::pair<int, int> position)
 SeaMap SeaMap::GenerateRandomSeaMap(const std::pair<int, int> size)
 {
     const int tilesAmount = size.first * size.second;
-    std::vector<TileType> tiles = std::vector<TileType>(tilesAmount);
+    std::vector<Tile> tiles = std::vector<Tile>(tilesAmount);
 
     for (int i = 0; i < tilesAmount; i++)
         tiles[i] = TileType::Sea;
@@ -88,8 +88,21 @@ SeaMap SeaMap::GenerateRandomSeaMap(const std::pair<int, int> size)
     {
         const int index = std::rand() % tilesAmount;
 
-        tiles[index] = TileType::Warship;
+        tiles[index] = Tile(TileType::Warship);
     }
 
     return SeaMap(tiles, size, true);
+}
+
+char SeaMap::Tile::GetChar() const
+{
+    constexpr const std::pair<char, char> tileTextures[] =
+    {
+        {'~', '~'},// TileType::Sea
+        {'W', 'x'},// TileType::Warship
+    };
+
+    std::pair<char, char> currentTilePossibleTextures = tileTextures[(int)Type];
+
+    return WasShot ? currentTilePossibleTextures.second : currentTilePossibleTextures.first;
 }

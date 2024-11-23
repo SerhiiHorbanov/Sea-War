@@ -99,7 +99,7 @@ void SeaWar::TryShooting()
 
     MapShootingResult shootingResult = AttackedPlayer->ShootAtTile(shootingPosition);
 
-    if (shootingResult == MapShootingResult::ShipDestroyed)
+    if (shootingResult == MapShootingResult::ShipShot)
         return;
 
     std::swap(AttackingPlayer, AttackedPlayer);

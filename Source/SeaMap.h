@@ -6,19 +6,30 @@
 enum class MapShootingResult
 {
     Miss,
-    ShipDestroyed
+    ShipShot
 };
 
 struct SeaMap
 {
-    enum class TileType : char
+    enum class TileType
     {
-        Sea = '~',
-        Warship = 'W',
-        DestroyedWarship = 'x',
+        Sea,
+        Warship,
     };
 
-    std::vector<TileType> tiles;
+    struct Tile
+    {
+        TileType Type;
+        bool WasShot;
+
+        Tile(TileType type = TileType::Sea) :
+            Type(type),
+            WasShot(false)
+        {}
+        char GetChar() const;
+    };
+
+    std::vector<Tile> tiles;
     std::pair<int, int> size;
     bool AnyShipsLeft;
 
@@ -26,7 +37,7 @@ struct SeaMap
         AnyShipsLeft(false)
     {}
 
-    SeaMap(const std::vector<TileType>& tiles, const std::pair<int, int>& size, bool anyShipsLeft) : 
+    SeaMap(const std::vector<Tile>& tiles, const std::pair<int, int>& size, bool anyShipsLeft) : 
         tiles(tiles), 
         size(size), 
         AnyShipsLeft(anyShipsLeft)
@@ -38,11 +49,10 @@ struct SeaMap
     int GetPositionIndex(const std::pair<int, int> position) const;
     bool IsInBounds(const std::pair<int, int> position) const;
 
-    TileType GetTile(const std::pair<int, int> position) const;
+    Tile& GetTile(const std::pair<int, int> position);
     char GetTileChar(const std::pair<int, int> position) const;
     std::string GetMapRowText(const int y) const;
 
-    void SetTile(const std::pair<int, int> position, TileType newTile);
     MapShootingResult ShootAtTile(const std::pair<int, int> position);
 
     static SeaMap GenerateRandomSeaMap(const std::pair<int, int> size);

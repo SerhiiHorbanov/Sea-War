@@ -3,35 +3,10 @@
 #include <string>
 #include <tuple>
 #include <vector>
-
-enum class MapShootingResult
-{
-    Miss,
-    ShipShot
-};
+#include "Tile.h"
 
 struct SeaMap
 {
-    enum class TileType
-    {
-        Sea,
-        Warship,
-    };
-
-    struct Tile
-    {
-        TileType Type;
-        bool WasShot;
-
-        Tile(TileType type = TileType::Sea) :
-            Type(type),
-            WasShot(false)
-        {}
-        
-        char GetChar(const bool useFogOfWar) const;
-        MapShootingResult TakeShot();
-    };
-
     std::vector<Tile> tiles;
     std::pair<int, int> size;
     bool AnyShipsLeft;

@@ -24,7 +24,10 @@
     <ClCompile Include="Source\SeaWar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Image.cpp">
+    <ClCompile Include="Source\FrameRender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,7 +38,10 @@
     <ClInclude Include="Source\SeaWar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Image.h">
+    <ClInclude Include="Source\FrameRender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

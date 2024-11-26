@@ -132,11 +132,13 @@
     <ClCompile Include="Source\FrameRender.cpp" />
     <ClCompile Include="Source\SeaMap.cpp" />
     <ClCompile Include="Source\SeaWar.cpp" />
+    <ClCompile Include="Source\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\FrameRender.h" />
     <ClInclude Include="Source\SeaMap.h" />
     <ClInclude Include="Source\SeaWar.h" />
+    <ClInclude Include="Source\Tile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

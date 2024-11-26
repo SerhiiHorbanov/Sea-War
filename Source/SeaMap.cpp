@@ -1,13 +1,6 @@
 #include "SeaMap.h"
 #include <random>
 
-const std::pair<char, char> tileTextures[] =
-{
-    {'~', '~'},// TileType::Sea
-    {'W', 'x'},// TileType::Warship
-};
-const char fogOfWarChar = '#';
-
 void SeaMap::UpdateAnyShipsLeft()
 {
     AnyShipsLeft = ContainsAnyAliveShips();
@@ -39,7 +32,7 @@ bool SeaMap::IsInBounds(const std::pair<int, int> position) const
     return isXInBounds && isYInBounds;
 }
 
-SeaMap::Tile& SeaMap::GetTile(const std::pair<int, int> position)
+Tile& SeaMap::GetTile(const std::pair<int, int> position)
 {
     const int index = GetPositionIndex(position);
 
@@ -95,24 +88,4 @@ std::unique_ptr<SeaMap> SeaMap::GenerateRandomSeaMap(const std::pair<int, int> s
     }
 
     return std::unique_ptr<SeaMap>(new SeaMap(tiles, size, true));
-}
-
-char SeaMap::Tile::GetChar(const bool fogOfWar) const
-{
-    if (fogOfWar && !WasShot)
-        return fogOfWarChar;
-
-    const std::pair<char, char> currentTilePossibleTextures = tileTextures[(int)Type];
-
-    return WasShot ? currentTilePossibleTextures.second : currentTilePossibleTextures.first;
-}
-
-MapShootingResult SeaMap::Tile::TakeShot()
-{
-    WasShot = true;
-
-    if (Type == TileType::Warship)
-        return MapShootingResult::ShipShot;
-
-    return MapShootingResult::Miss;
 }

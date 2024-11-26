@@ -82,13 +82,10 @@ MapShootingResult SeaMap::ShootAtTile(const std::pair<int, int> position)
 }
 
 // for now just tries to place a warship 10 times
-SeaMap SeaMap::GenerateRandomSeaMap(const std::pair<int, int> size)
+std::unique_ptr<SeaMap> SeaMap::GenerateRandomSeaMap(const std::pair<int, int> size)
 {
     const int tilesAmount = size.first * size.second;
     std::vector<Tile> tiles = std::vector<Tile>(tilesAmount);
-
-    for (int i = 0; i < tilesAmount; i++)
-        tiles[i] = TileType::Sea;
 
     for (int i = 0; i < 10; i++)
     {
@@ -97,7 +94,7 @@ SeaMap SeaMap::GenerateRandomSeaMap(const std::pair<int, int> size)
         tiles[index] = Tile(TileType::Warship);
     }
 
-    return SeaMap(tiles, size, true);
+    return std::unique_ptr<SeaMap>(new SeaMap(tiles, size, true));
 }
 
 char SeaMap::Tile::GetChar(const bool fogOfWar) const

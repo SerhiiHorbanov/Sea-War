@@ -29,14 +29,16 @@ void SeaWar::SetRandomSeed()
 
 void SeaWar::SetRandomSeaMaps()
 {
+    P1Map.reset();
+    P2Map.reset();
     P1Map = SeaMap::GenerateRandomSeaMap(mapSize);
     P2Map = SeaMap::GenerateRandomSeaMap(mapSize);
 }
 
 void SeaWar::SetAttackingAndAttackedMaps()
 {
-    AttackingPlayer = &P1Map;
-    AttackedPlayer = &P2Map;
+    AttackingPlayer = P1Map.get();
+    AttackedPlayer = P2Map.get();
 }
 
 void SeaWar::Render()
@@ -113,5 +115,5 @@ void SeaWar::SwapAttackingPlayer()
 
 bool SeaWar::GameContinues()
 {
-    return P1Map.AnyShipsLeft && P2Map.AnyShipsLeft;
+    return P1Map->AnyShipsLeft && P2Map->AnyShipsLeft;
 }

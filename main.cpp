@@ -1,10 +1,11 @@
 #include <iostream>
+#include <memory>
 #include "Source/SeaWar.h"
 
 int main()
 {
-    SeaWar game = SeaWar();
-    game.Run();
+    std::unique_ptr<SeaWar> game = std::unique_ptr<SeaWar>(new SeaWar());
+    game->Run();
 
     return 0;
 }

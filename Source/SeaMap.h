@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -57,7 +58,7 @@ struct SeaMap
 
     MapShootingResult ShootAtTile(const std::pair<int, int> position);
 
-    static SeaMap GenerateRandomSeaMap(const std::pair<int, int> size);
+    static std::unique_ptr<SeaMap> GenerateRandomSeaMap(const std::pair<int, int> size);
 };
 
 const std::pair<int, int> mapSize = std::pair<int, int>(10, 10);

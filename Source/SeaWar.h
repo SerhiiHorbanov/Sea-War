@@ -1,12 +1,12 @@
-#pragma once
+ #pragma once
 #include <string>
 #include "FrameRender.h"
 #include "SeaMap.h"
 
 class SeaWar
 {
-    SeaMap P1Map;
-    SeaMap P2Map;
+    std::unique_ptr<SeaMap> P1Map;
+    std::unique_ptr<SeaMap> P2Map;
     SeaMap* AttackingPlayer;
     SeaMap* AttackedPlayer;
 
@@ -38,4 +38,3 @@ private:
     void Shoot();
     void SwapAttackingPlayer();
 };
-

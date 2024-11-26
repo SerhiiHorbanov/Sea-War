@@ -4,7 +4,7 @@
 const std::string CurrentPlayerMapText = "Your map:";
 const std::string CurrentEnemyMapText = "Enemy map:";
 const std::string GapBetweenMaps = "          ";
-const std::string AskingPlayerWhereToShootText = "Where would you like to shoot?";
+const std::string AskingPlayerForActionText = "enter action (r/s) and coordinates (x,y):\n";
 
 const std::pair<char, char> tileTextures[] =
 {
@@ -30,7 +30,7 @@ int FrameRender::EvaluateImageLength() const
     result += mapSize.first * 2 * mapSize.second;// both map widths and newlines for each map row
     result += mapSize.second;// newlines between rows of maps
     result++;// newline
-    result += AskingPlayerWhereToShootText.length();
+    result += AskingPlayerForActionText.length();
 
     return result;
 }
@@ -42,6 +42,7 @@ FrameRender FrameRender::Render(const SeaMap& AttackingPlayer, const SeaMap& Att
     result.ReserveMemory();
     result.AddPlayerTextsLine();
     result.AddPlayersMapsLines(AttackingPlayer, AttackedPlayer);
+    result.AddAskingPlayerForActionLine();
 
     return result;
 }
@@ -105,4 +106,9 @@ void FrameRender::AddPlayersMapsLines(const SeaMap& AttackingPlayer, const SeaMa
         text += GetMapRowAsText(AttackedPlayer, y, true);
         text += '\n';
     }
+}
+
+void FrameRender::AddAskingPlayerForActionLine()
+{
+    text += AskingPlayerForActionText;
 }

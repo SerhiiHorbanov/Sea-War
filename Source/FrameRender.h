@@ -17,4 +17,5 @@ public:
 
     void AddPlayerTextsLine();
     void AddPlayersMapsLines(const SeaMap& AttackingPlayer, const SeaMap& AttackedPlayer);
+    void AddAskingPlayerForActionLine();
 };

@@ -114,9 +114,9 @@ void SeaWar::TryPerformAction()
 
 void SeaWar::Shoot()
 {
-    const MapShootingResult shootingResult = AttackedPlayer->ShootAtTile(actionPosition);
+    const ShootingResult shootingResult = AttackedPlayer->ShootAtTile(actionPosition);
 
-    if (shootingResult == MapShootingResult::Miss)
+    if (shootingResult == ShootingResult::Miss)
         SwapAttackingPlayer();
 }
 

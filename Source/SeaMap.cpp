@@ -47,15 +47,15 @@ const Tile& SeaMap::GetTileConst(const std::pair<int, int> position) const
     return tiles[index];
 }
 
-MapShootingResult SeaMap::ShootAtTile(const std::pair<int, int> position)
+ShootingResult SeaMap::ShootAtTile(const std::pair<int, int> position)
 {
     scannedWithRadar = false;
 
     Tile& tile = GetTile(position);
 
-    MapShootingResult shootingResult = tile.TakeShot();
+    ShootingResult shootingResult = tile.TakeShot();
 
-    if (shootingResult == MapShootingResult::ShipShot)
+    if (shootingResult == ShootingResult::ShipShot)
         UpdateAnyShipsLeft();
 
     return shootingResult;

@@ -1,5 +1,5 @@
 #pragma once
-enum class MapShootingResult
+enum class ShootingResult
 {
     Miss,
     ShipShot
@@ -21,5 +21,5 @@ struct Tile
         WasShot(false)
     {}
 
-    MapShootingResult TakeShot();
+    ShootingResult TakeShot();
 };

@@ -38,7 +38,7 @@ struct SeaMap
     Tile& GetTile(const std::pair<int, int> position);
     const Tile& GetTileConst(const std::pair<int, int> position) const;
 
-    MapShootingResult ShootAtTile(const std::pair<int, int> position);
+    ShootingResult ShootAtTile(const std::pair<int, int> position);
 
     void ScanAtPosition(const std::pair<int, int> position);
     int GetDistanceSquaredToScannedPosition(const std::pair<int, int> position) const;

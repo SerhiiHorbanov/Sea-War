@@ -1,11 +1,11 @@
 #include "Tile.h"
 
-MapShootingResult Tile::TakeShot()
+ShootingResult Tile::TakeShot()
 {
     WasShot = true;
 
     if (Type == TileType::Warship)
-        return MapShootingResult::ShipShot;
+        return ShootingResult::ShipShot;
 
-    return MapShootingResult::Miss;
+    return ShootingResult::Miss;
 }

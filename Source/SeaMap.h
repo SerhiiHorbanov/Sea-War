@@ -11,14 +11,22 @@ struct SeaMap
     std::pair<int, int> size;
     bool AnyShipsLeft;
 
+    std::pair<int, int> scannedAtPosition;
+    bool scannedWithRadar;
+
     SeaMap() :
-        AnyShipsLeft(false)
+        size(),
+        AnyShipsLeft(),
+        scannedAtPosition(),
+        scannedWithRadar()
     {}
 
-    SeaMap(const std::vector<Tile>& tiles, const std::pair<int, int>& size, bool anyShipsLeft) : 
-        tiles(tiles), 
-        size(size), 
-        AnyShipsLeft(anyShipsLeft)
+    SeaMap(const std::vector<Tile>& tiles, const std::pair<int, int>& size, bool AnyShipsLeft, const std::pair<int, int>& scannedAtPosition, bool scannedWithRadar) :
+        tiles(tiles),
+        size(size),
+        AnyShipsLeft(AnyShipsLeft),
+        scannedAtPosition(scannedAtPosition),
+        scannedWithRadar(scannedWithRadar)
     {}
 
     void UpdateAnyShipsLeft();
@@ -28,12 +36,10 @@ struct SeaMap
     bool IsInBounds(const std::pair<int, int> position) const;
 
     Tile& GetTile(const std::pair<int, int> position);
-    char GetTileChar(const std::pair<int, int> position, const bool fogOfWar) const;
-    std::string GetMapRowText(const int y, const bool fogOfWar) const;
+    const Tile& GetTileConst(const std::pair<int, int> position) const;
 
     MapShootingResult ShootAtTile(const std::pair<int, int> position);
 
     static std::unique_ptr<SeaMap> GenerateRandomSeaMap(const std::pair<int, int> size);
 };
-
 const std::pair<int, int> mapSize = std::pair<int, int>(10, 10);

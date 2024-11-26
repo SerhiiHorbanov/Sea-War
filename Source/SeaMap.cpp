@@ -39,27 +39,11 @@ Tile& SeaMap::GetTile(const std::pair<int, int> position)
     return tiles[index];
 }
 
-char SeaMap::GetTileChar(const std::pair<int, int> position, const bool fogOfWar) const
+const Tile& SeaMap::GetTileConst(const std::pair<int, int> position) const
 {
     const int index = GetPositionIndex(position);
-    const Tile tile = tiles[index];
 
-    return tile.GetChar(fogOfWar);
-}
-
-std::string SeaMap::GetMapRowText(const int y, const bool fogOfWar) const
-{
-    std::string result;
-    result.reserve(size.first);
-
-    for (int x = 0; x < size.first; x++)
-    {
-        const std::pair<int, int> position = std::pair<int, int>(x, y);
-
-        result += GetTileChar(position, fogOfWar);
-    }
-
-    return result;
+    return tiles[index];
 }
 
 MapShootingResult SeaMap::ShootAtTile(const std::pair<int, int> position)
@@ -87,5 +71,7 @@ std::unique_ptr<SeaMap> SeaMap::GenerateRandomSeaMap(const std::pair<int, int> s
         tiles[index] = Tile(TileType::Warship);
     }
 
-    return std::unique_ptr<SeaMap>(new SeaMap(tiles, size, true));
+    SeaMap* seaMap = new SeaMap(tiles, size, true, std::pair<int, int>(), false);
+
+    return std::unique_ptr<SeaMap>(seaMap);
 }

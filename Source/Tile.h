@@ -22,5 +22,4 @@ struct Tile
     {}
 
     MapShootingResult TakeShot();
-    char GetChar(bool fogOfWar) const;
 };

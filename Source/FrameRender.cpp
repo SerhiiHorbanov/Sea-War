@@ -6,13 +6,20 @@ const std::string CurrentEnemyMapText = "Enemy map:";
 const std::string GapBetweenMaps = "          ";
 const std::string AskingPlayerWhereToShootText = "Where would you like to shoot?";
 
+const std::pair<char, char> tileTextures[] =
+{
+    {'~', '~'},// TileType::Sea
+    {'W', 'x'},// TileType::Warship
+};
+const char fogOfWarChar = '#';
+
 void FrameRender::ReserveMemory()
 {
     const int lengthReserving = EvaluateImageLength();
     text.reserve(lengthReserving);
 }
 
-int FrameRender::EvaluateImageLength()
+int FrameRender::EvaluateImageLength() const
 {
     int result = 0;
 
@@ -45,6 +52,30 @@ void FrameRender::Display() const
     std::cout << text;
 }
 
+char GetTileChar(const Tile& tile, const bool fogOfWar)
+{
+    if (fogOfWar && !tile.WasShot)
+        return fogOfWarChar;
+
+    const std::pair<char, char> currentTilePossibleTextures = tileTextures[(int)tile.Type];
+
+    return tile.WasShot ? currentTilePossibleTextures.second : currentTilePossibleTextures.first;
+}
+
+std::string GetMapRowAsText(const SeaMap& playerMap, const int y, const bool fogOfWar)
+{
+    std::string result;
+    result.reserve(playerMap.size.first);
+
+    for (int x = 0; x < playerMap.size.first; x++)
+    {
+        std::pair<int, int> position = std::pair<int, int>(x, y);
+        result += GetTileChar(playerMap.GetTileConst(position), fogOfWar);
+    }
+
+    return result;
+}
+
 void FrameRender::AddPlayerTextsLine()
 {
     text += CurrentPlayerMapText;
@@ -58,9 +89,9 @@ void FrameRender::AddPlayersMapsLines(const SeaMap& AttackingPlayer, const SeaMa
 {
     for (int y = 0; y < mapSize.second; y++)
     {
-        text += AttackingPlayer.GetMapRowText(y, false);
+        text += GetMapRowAsText(AttackingPlayer, y, false);
         text += GapBetweenMaps;
-        text += AttackedPlayer.GetMapRowText(y, true);
+        text += GetMapRowAsText(AttackedPlayer, y, true);
         text += '\n';
     }
 }

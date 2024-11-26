@@ -13,7 +13,7 @@ public:
     void Display() const;
 
     void ReserveMemory();
-    int EvaluateImageLength();
+    int EvaluateImageLength() const;
 
     void AddPlayerTextsLine();
     void AddPlayersMapsLines(const SeaMap& AttackingPlayer, const SeaMap& AttackedPlayer);

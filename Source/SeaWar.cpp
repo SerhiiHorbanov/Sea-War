@@ -69,7 +69,9 @@ void SeaWar::ProcessInput(const std::string& input)
 {
     std::stringstream stream = std::stringstream(input);
 
-    isValidShootingPosition = true;
+    actionType = GetActionTypeByChar(stream.get());
+    isValidActionPosition = true;
+
     try
     {
         std::string numberText;
@@ -78,31 +80,41 @@ void SeaWar::ProcessInput(const std::string& input)
         std::getline(stream, numberText);
         const int y = std::stoi(numberText) - 1;
 
-        shootingPosition = std::pair<int, int>(x, y);
+        actionPosition = std::pair<int, int>(x, y);
     }
     catch (std::exception exception)
     {
-        isValidShootingPosition = false;
+        isValidActionPosition = false;
     }
-
-    if (!AttackedPlayer->IsInBounds(shootingPosition))
-        isValidShootingPosition = false;
+    
+    if (!AttackedPlayer->IsInBounds(actionPosition))
+        isValidActionPosition = false;
 }
 
 void SeaWar::Update()
 {
-    TryShooting();
+    TryPerformAction();
 }
 
-void SeaWar::TryShooting()
+void SeaWar::TryPerformAction()
 {
-    if (isValidShootingPosition)
+    if (!isValidActionPosition)
+        return;
+
+    switch (actionType)
+    {
+    case TurnActionType::Shoot:
         Shoot();
+        break;
+    case TurnActionType::RadarScan:
+        Scan();
+        break;
+    }
 }
 
 void SeaWar::Shoot()
 {
-    const MapShootingResult shootingResult = AttackedPlayer->ShootAtTile(shootingPosition);
+    const MapShootingResult shootingResult = AttackedPlayer->ShootAtTile(actionPosition);
 
     if (shootingResult == MapShootingResult::Miss)
         SwapAttackingPlayer();
@@ -112,6 +124,24 @@ void SeaWar::SwapAttackingPlayer()
 {
     std::swap(AttackingPlayer, AttackedPlayer);
 }
+
+SeaWar::TurnActionType SeaWar::GetActionTypeByChar(char character)
+{
+    switch (character)
+    {
+    case 'r':
+        return TurnActionType::RadarScan;
+    case 's':
+        return TurnActionType::Shoot;
+    }
+    return TurnActionType::None;
+}
+
+void SeaWar::Scan()
+{
+    AttackedPlayer->ScanAtPosition(actionPosition);
+}
+
 
 bool SeaWar::GameContinues()
 {

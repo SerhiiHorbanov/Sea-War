@@ -1,5 +1,6 @@
 #include "SeaMap.h"
 #include <random>
+const int ScanningRadius = 10;
 
 void SeaMap::UpdateAnyShipsLeft()
 {
@@ -48,6 +49,8 @@ const Tile& SeaMap::GetTileConst(const std::pair<int, int> position) const
 
 MapShootingResult SeaMap::ShootAtTile(const std::pair<int, int> position)
 {
+    scannedWithRadar = false;
+
     Tile& tile = GetTile(position);
 
     MapShootingResult shootingResult = tile.TakeShot();
@@ -56,6 +59,25 @@ MapShootingResult SeaMap::ShootAtTile(const std::pair<int, int> position)
         UpdateAnyShipsLeft();
 
     return shootingResult;
+}
+
+void SeaMap::ScanAtPosition(const std::pair<int, int> position)
+{
+    scannedAtPosition = position;
+    scannedWithRadar = true;
+}
+
+int SeaMap::GetDistanceSquaredToScannedPosition(const std::pair<int, int> position) const
+{
+    int x = std::abs(position.first - scannedAtPosition.first);
+    int y = std::abs(position.second - scannedAtPosition.second);
+
+    return (x * x) + (y * y);
+}
+
+bool SeaMap::IsScanned(const std::pair<int, int> position) const
+{
+    return GetDistanceSquaredToScannedPosition(position) < ScanningRadius;
 }
 
 // for now just tries to place a warship 10 times

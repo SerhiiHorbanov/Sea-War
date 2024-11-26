@@ -62,6 +62,16 @@ char GetTileChar(const Tile& tile, const bool fogOfWar)
     return tile.WasShot ? currentTilePossibleTextures.second : currentTilePossibleTextures.first;
 }
 
+char GetTileChar(const SeaMap& playerMap, const std::pair<int, int> position, const bool fogOfWar)
+{
+    if (!playerMap.scannedWithRadar)
+        return GetTileChar(playerMap.GetTileConst(position), fogOfWar);
+    else if (!fogOfWar)
+        return GetTileChar(playerMap.GetTileConst(position), false);
+
+    return GetTileChar(playerMap.GetTileConst(position), !playerMap.IsScanned(position));
+}
+
 std::string GetMapRowAsText(const SeaMap& playerMap, const int y, const bool fogOfWar)
 {
     std::string result;
@@ -70,7 +80,8 @@ std::string GetMapRowAsText(const SeaMap& playerMap, const int y, const bool fog
     for (int x = 0; x < playerMap.size.first; x++)
     {
         std::pair<int, int> position = std::pair<int, int>(x, y);
-        result += GetTileChar(playerMap.GetTileConst(position), fogOfWar);
+        
+        result += GetTileChar(playerMap, position, fogOfWar);
     }
 
     return result;

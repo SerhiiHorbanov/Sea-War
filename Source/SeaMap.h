@@ -40,6 +40,10 @@ struct SeaMap
 
     MapShootingResult ShootAtTile(const std::pair<int, int> position);
 
+    void ScanAtPosition(const std::pair<int, int> position);
+    int GetDistanceSquaredToScannedPosition(const std::pair<int, int> position) const;
+    bool IsScanned(const std::pair<int, int> position) const;
+
     static std::unique_ptr<SeaMap> GenerateRandomSeaMap(const std::pair<int, int> size);
 };
 const std::pair<int, int> mapSize = std::pair<int, int>(10, 10);

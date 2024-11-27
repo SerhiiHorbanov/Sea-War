@@ -35,13 +35,13 @@ int FrameRender::EvaluateImageLength() const
     return result;
 }
 
-FrameRender FrameRender::Render(const SeaMap& AttackingPlayer, const SeaMap& AttackedPlayer)
+FrameRender FrameRender::Render(const Player& attackingPlayer, const Player& attackedPlayer)
 {
     FrameRender result = FrameRender();
 
     result.ReserveMemory();
     result.AddPlayerTextsLine();
-    result.AddPlayersMapsLines(AttackingPlayer, AttackedPlayer);
+    result.AddPlayersMapsLines(attackingPlayer, attackedPlayer);
     result.AddAskingPlayerForActionLine();
 
     return result;
@@ -63,26 +63,28 @@ char GetTileChar(const Tile& tile, const bool fogOfWar)
     return tile.WasShot ? currentTilePossibleTextures.second : currentTilePossibleTextures.first;
 }
 
-char GetTileChar(const SeaMap& playerMap, const std::pair<int, int> position, const bool fogOfWar)
+char GetTileChar(const SeaMap& seaMap, const std::pair<int, int> position, const bool fogOfWar)
 {
-    if (!playerMap.scannedWithRadar)
-        return GetTileChar(playerMap.GetTileConst(position), fogOfWar);
+    if (!seaMap.scannedWithRadar)
+        return GetTileChar(seaMap.GetTileConst(position), fogOfWar);
     else if (!fogOfWar)
-        return GetTileChar(playerMap.GetTileConst(position), false);
+        return GetTileChar(seaMap.GetTileConst(position), false);
 
-    return GetTileChar(playerMap.GetTileConst(position), !playerMap.IsScanned(position));
+    return GetTileChar(seaMap.GetTileConst(position), !seaMap.IsScanned(position));
 }
 
-std::string GetMapRowAsText(const SeaMap& playerMap, const int y, const bool fogOfWar)
+std::string GetMapRowAsText(const SeaMap& seaMap, const int y, const bool fogOfWar)
 {
-    std::string result;
-    result.reserve(playerMap.size.first);
+    const int width = seaMap.size.first;
 
-    for (int x = 0; x < playerMap.size.first; x++)
+    std::string result;
+    result.reserve(width);
+
+    for (int x = 0; x < width; x++)
     {
         std::pair<int, int> position = std::pair<int, int>(x, y);
         
-        result += GetTileChar(playerMap, position, fogOfWar);
+        result += GetTileChar(seaMap, position, fogOfWar);
     }
 
     return result;
@@ -97,13 +99,16 @@ void FrameRender::AddPlayerTextsLine()
     text += '\n';
 }
 
-void FrameRender::AddPlayersMapsLines(const SeaMap& AttackingPlayer, const SeaMap& AttackedPlayer)
+void FrameRender::AddPlayersMapsLines(const Player& attackingPlayer, const Player& attackedPlayer)
 {
+    const SeaMap& attackingPlayerMap = attackingPlayer.GetMap();
+    const SeaMap& attackedPlayerMap = attackedPlayer.GetMap();
+
     for (int y = 0; y < mapSize.second; y++)
     {
-        text += GetMapRowAsText(AttackingPlayer, y, false);
+        text += GetMapRowAsText(attackingPlayerMap, y, false);
         text += GapBetweenMaps;
-        text += GetMapRowAsText(AttackedPlayer, y, true);
+        text += GetMapRowAsText(attackedPlayerMap, y, true);
         text += '\n';
     }
 }

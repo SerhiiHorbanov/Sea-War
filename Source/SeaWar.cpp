@@ -18,7 +18,7 @@ void SeaWar::Run()
 void SeaWar::Initialization()
 {
     SetRandomSeed();
-    SetRandomSeaMaps();
+    InitializePlayers();
     SetAttackingAndAttackedMaps();
 }
 
@@ -27,12 +27,12 @@ void SeaWar::SetRandomSeed()
     std::srand(time(NULL));
 }
 
-void SeaWar::SetRandomSeaMaps()
+void SeaWar::InitializePlayers()
 {
     P1Map.reset();
     P2Map.reset();
-    P1Map = SeaMap::GenerateRandomSeaMap(mapSize);
-    P2Map = SeaMap::GenerateRandomSeaMap(mapSize);
+    P1Map = Player::CreateNewPlayer();
+    P2Map = Player::CreateNewPlayer();
 }
 
 void SeaWar::SetAttackingAndAttackedMaps()
@@ -87,7 +87,7 @@ void SeaWar::ProcessInput(const std::string& input)
         isValidActionPosition = false;
     }
     
-    if (!AttackedPlayer->IsInBounds(actionPosition))
+    if (!AttackedPlayer->GetMap().IsInBounds(actionPosition))
         isValidActionPosition = false;
 }
 
@@ -114,7 +114,7 @@ void SeaWar::TryPerformAction()
 
 void SeaWar::Shoot()
 {
-    const ShootingResult shootingResult = AttackedPlayer->ShootAtTile(actionPosition);
+    const ShootingResult shootingResult = AttackedPlayer->ShootAtPosition(actionPosition);
 
     if (shootingResult == ShootingResult::Miss)
         SwapAttackingPlayer();
@@ -139,11 +139,10 @@ SeaWar::TurnActionType SeaWar::GetActionTypeByChar(char character)
 
 void SeaWar::Scan()
 {
-    AttackedPlayer->ScanAtPosition(actionPosition);
+    AttackedPlayer->TryScanAtPosition(actionPosition);
 }
-
 
 bool SeaWar::GameContinues()
 {
-    return P1Map->AnyShipsLeft && P2Map->AnyShipsLeft;
+    return !P1Map->HasLost() && !P2Map->HasLost();
 }

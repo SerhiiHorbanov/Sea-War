@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "SeaMap.h"
+#include "Player.h"
 
 struct FrameRender
 {
@@ -9,13 +9,13 @@ public:
 
     FrameRender() = default;
 
-    static FrameRender Render(const SeaMap& AttackingPlayer, const SeaMap& AttackedPlayer);
+    static FrameRender Render(const Player& attackingPlayer, const Player& attackedPlayer);
     void Display() const;
 
     void ReserveMemory();
     int EvaluateImageLength() const;
 
     void AddPlayerTextsLine();
-    void AddPlayersMapsLines(const SeaMap& AttackingPlayer, const SeaMap& AttackedPlayer);
+    void AddPlayersMapsLines(const Player& attackingPlayer, const Player& attackedPlayer);
     void AddAskingPlayerForActionLine();
 };

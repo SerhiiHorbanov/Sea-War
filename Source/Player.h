@@ -6,11 +6,11 @@ class Player
 {
 private:
     int _radarScansLeft;
-    std::unique_ptr<SeaMap> _map;
+    std::shared_ptr<SeaMap> _map;
 
 private:
-    Player(std::unique_ptr<SeaMap>& map, const int radarScansLeft) :
-        _map(map.release()), 
+    Player(std::shared_ptr<SeaMap> map, const int radarScansLeft) :
+        _map(map), 
         _radarScansLeft(radarScansLeft)
     {}
 

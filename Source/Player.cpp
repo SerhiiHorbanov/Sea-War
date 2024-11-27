@@ -2,7 +2,7 @@
 
 std::shared_ptr<Player> Player::CreateNewPlayer()
 {
-    std::unique_ptr<SeaMap> map = SeaMap::GenerateRandomSeaMap(mapSize);
+    std::shared_ptr<SeaMap> map = SeaMap::GenerateRandomSeaMap(mapSize);
 
     return std::shared_ptr<Player>(new Player(map, 5));
 }

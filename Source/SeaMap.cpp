@@ -81,7 +81,7 @@ bool SeaMap::IsScanned(const std::pair<int, int> position) const
 }
 
 // for now just tries to place a warship 10 times
-std::unique_ptr<SeaMap> SeaMap::GenerateRandomSeaMap(const std::pair<int, int> size)
+std::shared_ptr<SeaMap> SeaMap::GenerateRandomSeaMap(const std::pair<int, int> size)
 {
     const int tilesAmount = size.first * size.second;
     std::vector<Tile> tiles = std::vector<Tile>(tilesAmount);
@@ -95,5 +95,5 @@ std::unique_ptr<SeaMap> SeaMap::GenerateRandomSeaMap(const std::pair<int, int> s
 
     SeaMap* seaMap = new SeaMap(tiles, size, true, std::pair<int, int>(), false);
 
-    return std::unique_ptr<SeaMap>(seaMap);
+    return std::shared_ptr<SeaMap>(seaMap);
 }

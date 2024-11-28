@@ -13,7 +13,7 @@ bool SeaMap::ContainsAnyAliveShips()
 
     for (int i = 0; i < tilesAmount; i++)
     {
-        if (tiles[i].Type == TileType::Warship)
+        if (tiles[i].Type == TileType::Warship && !tiles[i].WasShot)
             return true;
     }
     return false;

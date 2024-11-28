@@ -1,6 +1,5 @@
 #include "SeaWar.h"
-#include <iostream>
-#include <sstream>
+#include <conio.h>
 #include "FrameRender.h"
 
 void SeaWar::Run()
@@ -54,41 +53,48 @@ FrameRender SeaWar::GenerateImage()
 
 void SeaWar::Input()
 {
-    const std::string input = EnterInput();
+    const char input = EnterInput();
     ProcessInput(input);
 }
 
-std::string SeaWar::EnterInput()
+char SeaWar::EnterInput()
 {
-    std::string input;
-    std::getline(std::cin, input);
-    return input;
+    return _getch();
 }
 
-void SeaWar::ProcessInput(const std::string& input)
+void SeaWar::ProcessInput(const char input)
 {
-    std::stringstream stream = std::stringstream(input);
+    actionType = TurnActionType::None;
 
-    actionType = GetActionTypeByChar(stream.get());
-    isValidActionPosition = true;
-
-    try
+    switch (input)
     {
-        std::string numberText;
-        std::getline(stream, numberText, ',');
-        const int x = std::stoi(numberText) - 1;
-        std::getline(stream, numberText);
-        const int y = std::stoi(numberText) - 1;
+    case 'w':
+        TryMoveActionPosition({ 0, -1 });
+        break;
+    case 's':
+        TryMoveActionPosition({ 0, 1 });
+        break;
+    case 'a':
+        TryMoveActionPosition({ -1, 0 });
+        break;
+    case 'd':
+        TryMoveActionPosition({ 1, 0 });
+        break;
+    case 'e':
+        actionType = TurnActionType::Shoot;
+        break;
+    case 'r':
+        actionType = TurnActionType::RadarScan;
+        break;
+    }
+}
 
-        actionPosition = std::pair<int, int>(x, y);
-    }
-    catch (std::exception exception)
-    {
-        isValidActionPosition = false;
-    }
-    
-    if (!AttackedPlayer->GetMap().IsInBounds(actionPosition))
-        isValidActionPosition = false;
+void SeaWar::TryMoveActionPosition(const std::pair<int, int> delta)
+{
+    const std::pair<int, int> newPosition = { delta.first + actionPosition.first, delta.second + actionPosition.second };
+
+    if (AttackedPlayer->GetMap().IsInBounds(newPosition))
+        actionPosition = newPosition;
 }
 
 void SeaWar::Update()
@@ -98,9 +104,6 @@ void SeaWar::Update()
 
 void SeaWar::TryPerformAction()
 {
-    if (!isValidActionPosition)
-        return;
-
     switch (actionType)
     {
     case TurnActionType::Shoot:
@@ -123,18 +126,6 @@ void SeaWar::Shoot()
 void SeaWar::SwapAttackingPlayer()
 {
     std::swap(AttackingPlayer, AttackedPlayer);
-}
-
-SeaWar::TurnActionType SeaWar::GetActionTypeByChar(char character)
-{
-    switch (character)
-    {
-    case 'r':
-        return TurnActionType::RadarScan;
-    case 's':
-        return TurnActionType::Shoot;
-    }
-    return TurnActionType::None;
 }
 
 void SeaWar::Scan()

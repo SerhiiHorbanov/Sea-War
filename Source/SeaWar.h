@@ -17,7 +17,6 @@ class SeaWar
     Player* AttackingPlayer;
     Player* AttackedPlayer;
 
-    bool isValidActionPosition;
     std::pair<int, int> actionPosition;
     TurnActionType actionType;
 
@@ -39,9 +38,9 @@ private:
 
     FrameRender GenerateImage();
 
-    std::string EnterInput();
-    void ProcessInput(const std::string& input);
-    static TurnActionType GetActionTypeByChar(const char character);
+    char EnterInput();
+    void ProcessInput(const char input);
+    void TryMoveActionPosition(const std::pair<int, int> delta);
 
     void TryPerformAction();
 

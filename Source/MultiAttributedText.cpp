@@ -23,10 +23,30 @@ void MultiAttributedText::SetAttributeForCharacter(const int index, ConsoleTextA
 
 void MultiAttributedText::Append(ConsoleTextAttribute attribute, std::string text)
 {
+	TryAddAttribute(attribute);
+	_text += text;
+}
+
+void MultiAttributedText::Append(ConsoleTextAttribute attribute, char character)
+{
+	TryAddAttribute(attribute);
+	_text += character;
+}
+
+void MultiAttributedText::Append(std::string text)
+{
+	_text += text;
+}
+
+void MultiAttributedText::Append(char character)
+{
+	_text += character;
+}
+
+void MultiAttributedText::TryAddAttribute(ConsoleTextAttribute attribute)
+{
 	const int lastAttributeIndex = _attributes.size() - 1;
 	const ConsoleTextAttribute lastAttribute = _attributes[lastAttributeIndex].Attribute;
-
-	_text += text;
 
 	if (attribute == lastAttribute)
 		return;

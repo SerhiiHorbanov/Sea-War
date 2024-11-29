@@ -11,8 +11,8 @@ enum class ConsoleColor : char
     Red,        //0100
     Purple,     //0101
     Yellow,     //0110
-    Gray,       //1000
     LightGray,  //0111
+    Gray,       //1000
     LightBlue,  //1001
     LightGreen, //1010
     LightCyan,  //1011
@@ -28,7 +28,7 @@ struct ConsoleTextAttribute
 public:
     ConsoleTextAttribute
     (
-        ConsoleColor foreGroundColor = ConsoleColor::LightGray, ConsoleColor backGroundColor = ConsoleColor::Black,
+        ConsoleColor foreGroundColor = ConsoleColor::Gray, ConsoleColor backGroundColor = ConsoleColor::Black,
         bool topEdge = false, bool bottomEdge = false, bool rightEdge = false, bool leftEdge = false,
         bool invertColors = false
     )

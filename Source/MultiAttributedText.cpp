@@ -6,7 +6,7 @@ void MultiAttributedText::Print() const
 		PrintSegment(i);
 }
 
-void MultiAttributedText::SetAttributeForCharacter(const int index, ConsoleTextAttribute attribute)
+void MultiAttributedText::SetAttributeForCharacter(const int index, const ConsoleTextAttribute attribute)
 {
 	if (index == _text.size() - 1)
 		_attributes.emplace_back(attribute, index);
@@ -15,38 +15,45 @@ void MultiAttributedText::SetAttributeForCharacter(const int index, ConsoleTextA
 
 	if (_attributes[characterInPairIndex].Attribute == attribute)
 		return;
+
 	auto iterator = _attributes.begin() + characterInPairIndex;
 
 	_attributes.insert(iterator, AttributeStartIndexPair(attribute, index));
 	_attributes.emplace(iterator, _attributes[characterInPairIndex]);
 }
 
-void MultiAttributedText::Append(ConsoleTextAttribute attribute, std::string text)
+void MultiAttributedText::Append(const ConsoleTextAttribute attribute, const std::string& text)
 {
-	TryAddAttribute(attribute);
+	TryAddAttributeAtEnd(attribute);
 	_text += text;
 }
 
-void MultiAttributedText::Append(ConsoleTextAttribute attribute, char character)
+void MultiAttributedText::Append(const ConsoleTextAttribute attribute, char character)
 {
-	TryAddAttribute(attribute);
+	TryAddAttributeAtEnd(attribute);
 	_text += character;
 }
 
-void MultiAttributedText::Append(std::string text)
+void MultiAttributedText::Append(const std::string& text)
 {
 	_text += text;
 }
 
-void MultiAttributedText::Append(char character)
+void MultiAttributedText::Append(const char character)
 {
 	_text += character;
 }
 
-void MultiAttributedText::TryAddAttribute(ConsoleTextAttribute attribute)
+void MultiAttributedText::TryAddAttributeAtEnd(const ConsoleTextAttribute attribute)
 {
-	const int lastAttributeIndex = _attributes.size() - 1;
-	const ConsoleTextAttribute lastAttribute = _attributes[lastAttributeIndex].Attribute;
+	const int attributesAmount = _attributes.size();
+	if (_attributes.size() == 0)
+	{
+		_attributes.emplace_back(attribute, 0);
+		return;
+	}
+
+	const ConsoleTextAttribute lastAttribute = GetAttributeOfSegment(attributesAmount - 1);
 
 	if (attribute == lastAttribute)
 		return;
@@ -60,7 +67,7 @@ int MultiAttributedText::GetAttributeStartIndexPairForTextIndex(const int index)
 
 	for (int i = 1; i < attributesAmount; i++)
 	{
-		if (_attributes[i].StartIndex >= index)
+		if (GetStartIndexOfSegment(i) >= index)
 			return i - 1;
 	}
 	return 0;
@@ -69,22 +76,35 @@ int MultiAttributedText::GetAttributeStartIndexPairForTextIndex(const int index)
 void MultiAttributedText::PrintSegment(const int index) const
 {
 	std::string_view stringSegment = GetSegment(index);
-	ConsoleTextAttribute attribute = _attributes[index].Attribute;
+	ConsoleTextAttribute attribute = GetAttributeOfSegment(index);
 
 	attribute.Apply();
 	std::cout << stringSegment;
 }
 
+int MultiAttributedText::GetStartIndexOfSegment(const int segmentIndex) const
+{
+	return _attributes[segmentIndex].StartIndex;
+}
+
+ConsoleTextAttribute MultiAttributedText::GetAttributeOfSegment(const int segmentIndex) const
+{
+	return _attributes[segmentIndex].Attribute;
+}
+
 std::string_view MultiAttributedText::GetSegment(const int index) const
 {
 	const unsigned int length = GetSegmentLength(index);
+	const char* begin = _text.c_str() + GetStartIndexOfSegment(index);
 
-	return std::string_view(_text.c_str(), length);
+	return std::string_view(begin, length);
 }
 
 unsigned int MultiAttributedText::GetSegmentLength(const int index) const
 {
-	if (index >= _attributes.size() - 1)
-		return _text.size();
-	return _attributes[index + 1].StartIndex - _attributes[index].StartIndex;
+	const int lastAttributeIndex = _attributes.size() - 1;
+
+	if (index == lastAttributeIndex)
+		return _text.size() - GetStartIndexOfSegment(lastAttributeIndex);
+	return GetStartIndexOfSegment(index + 1) - GetStartIndexOfSegment(index);
 }

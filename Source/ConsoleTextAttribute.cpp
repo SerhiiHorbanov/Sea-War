@@ -1,5 +1,5 @@
 #include "ConsoleTextAttribute.h"     
-constexpr uint32_t DefaultAttribute = (uint32_t)ConsoleColor::LightGray;
+constexpr uint32_t DefaultAttribute = (uint32_t)ConsoleColor::DarkGray;
 
 constexpr uint32_t BackGroundColorShift = 4;
 

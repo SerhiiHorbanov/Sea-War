@@ -18,7 +18,7 @@ public:
 
     void AddPlayerTextsLine();
     void AddPlayersMapsLines(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition);
-    void AddAskingPlayerForActionLine();
+    void AddTipLine();
 
     void AddMapRow(const SeaMap& seaMap, const std::pair<int, int> actionPosition, const int y, const bool fogOfWar);
 };

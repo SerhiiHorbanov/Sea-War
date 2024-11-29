@@ -4,12 +4,12 @@
 const std::string CurrentPlayerMapText = "Your map:";
 const std::string CurrentEnemyMapText = "Enemy map:";
 const std::string GapBetweenMaps = "          ";
-const std::string AskingPlayerForActionText = "enter action (r/s) and coordinates (x,y):\n";
+const std::string TipText = "press W/A/S/D to move. press E to shoot. press R to scan with radar\n";
 
 const ConsoleTextAttribute PlayerTextsAttribute = ConsoleTextAttribute();
 const ConsoleTextAttribute MapTextAttribute = ConsoleTextAttribute();
 const ConsoleTextAttribute PointedAtTileAttribute = ConsoleTextAttribute(ConsoleColor::Black, ConsoleColor::Red);//, false, false, false, false, true);
-const ConsoleTextAttribute AskingPlayerForActionAttribute = ConsoleTextAttribute(ConsoleColor::LightGreen);
+const ConsoleTextAttribute TipTextAttribute = ConsoleTextAttribute(ConsoleColor::LightGreen);
 
 const std::pair<char, char> tileTextures[] =
 {
@@ -35,7 +35,7 @@ int FrameRender::EvaluateImageLength() const
     result += mapSize.first * 2 * mapSize.second;// both map widths and newlines for each map row
     result += mapSize.second;// newlines between rows of maps
     result++;// newline
-    result += AskingPlayerForActionText.length();
+    result += TipText.length();
 
     return result;
 }
@@ -47,7 +47,7 @@ FrameRender FrameRender::Render(const Player& attackingPlayer, const Player& att
     result.ReserveMemory();
     result.AddPlayerTextsLine();
     result.AddPlayersMapsLines(attackingPlayer, attackedPlayer, actionPosition);
-    result.AddAskingPlayerForActionLine();
+    result.AddTipLine();
 
     return result;
 }
@@ -121,7 +121,7 @@ void FrameRender::AddPlayersMapsLines(const Player& attackingPlayer, const Playe
     }
 }
 
-void FrameRender::AddAskingPlayerForActionLine()
+void FrameRender::AddTipLine()
 {
-    text.Append(AskingPlayerForActionAttribute, AskingPlayerForActionText);
+    text.Append(TipTextAttribute, TipText);
 }

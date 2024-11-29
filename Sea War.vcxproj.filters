@@ -36,6 +36,9 @@
     <ClCompile Include="Source\ConsoleTextAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MultiAttributedText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SeaMap.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\ConsoleTextAttribute.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MultiAttributedText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

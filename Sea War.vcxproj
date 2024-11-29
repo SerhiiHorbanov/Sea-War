@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Source\MultiAttributedText.cpp" />
     <ClCompile Include="Source\ConsoleTextAttribute.cpp" />
     <ClCompile Include="Source\FrameRender.cpp" />
     <ClCompile Include="Source\Player.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Source\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\MultiAttributedText.h" />
     <ClInclude Include="Source\ConsoleTextAttribute.h" />
     <ClInclude Include="Source\FrameRender.h" />
     <ClInclude Include="Source\Player.h" />

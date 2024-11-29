@@ -9,7 +9,7 @@ const std::string AskingPlayerForActionText = "enter action (r/s) and coordinate
 const ConsoleTextAttribute PlayerTextsAttribute = ConsoleTextAttribute();
 const ConsoleTextAttribute MapTextAttribute = ConsoleTextAttribute();
 const ConsoleTextAttribute PointedAtTileAttribute = ConsoleTextAttribute(ConsoleColor::Black, ConsoleColor::Red);//, false, false, false, false, true);
-const ConsoleTextAttribute AskingPlayerForActionAttribute = ConsoleTextAttribute(ConsoleColor::White);
+const ConsoleTextAttribute AskingPlayerForActionAttribute = ConsoleTextAttribute(ConsoleColor::LightGreen);
 
 const std::pair<char, char> tileTextures[] =
 {
@@ -70,12 +70,14 @@ char GetTileChar(const Tile& tile, const bool fogOfWar)
 
 char GetTileChar(const SeaMap& seaMap, const std::pair<int, int> position, const bool fogOfWar)
 {
-    if (!seaMap.scannedWithRadar)
-        return GetTileChar(seaMap.GetTileConst(position), fogOfWar);
-    else if (!fogOfWar)
-        return GetTileChar(seaMap.GetTileConst(position), false);
+    const Tile& tile = seaMap.GetTileConst(position);
 
-    return GetTileChar(seaMap.GetTileConst(position), !seaMap.IsScanned(position));
+    if (!seaMap.scannedWithRadar)
+        return GetTileChar(tile, fogOfWar);
+    else if (!fogOfWar)
+        return GetTileChar(tile, false);
+
+    return GetTileChar(tile, !seaMap.IsScanned(position));
 }
 
 void FrameRender::AddMapRow(const SeaMap& seaMap, const std::pair<int, int> actionPosition, const int y, const bool fogOfWar)
@@ -85,7 +87,11 @@ void FrameRender::AddMapRow(const SeaMap& seaMap, const std::pair<int, int> acti
     for (int x = 0; x < width; x++)
     {
         std::pair<int, int> position = std::pair<int, int>(x, y);
-        ConsoleTextAttribute attribute = position == actionPosition ? PointedAtTileAttribute : MapTextAttribute;
+
+        ConsoleTextAttribute attribute = MapTextAttribute;
+        if (actionPosition == position && fogOfWar)
+            attribute = PointedAtTileAttribute;
+
         text.Append(attribute, GetTileChar(seaMap, position, fogOfWar));
     }
 }

@@ -6,6 +6,11 @@ const std::string CurrentEnemyMapText = "Enemy map:";
 const std::string GapBetweenMaps = "          ";
 const std::string AskingPlayerForActionText = "enter action (r/s) and coordinates (x,y):\n";
 
+const ConsoleTextAttribute PlayerTextsAttribute = ConsoleTextAttribute();
+const ConsoleTextAttribute MapTextAttribute = ConsoleTextAttribute();
+const ConsoleTextAttribute PointedAtTileAttribute = ConsoleTextAttribute(ConsoleColor::Black, ConsoleColor::Red);//, false, false, false, false, true);
+const ConsoleTextAttribute AskingPlayerForActionAttribute = ConsoleTextAttribute(ConsoleColor::White);
+
 const std::pair<char, char> tileTextures[] =
 {
     {'~', '~'},// TileType::Sea
@@ -16,7 +21,7 @@ const char fogOfWarChar = '#';
 void FrameRender::ReserveMemory()
 {
     const int lengthReserving = EvaluateImageLength();
-    text.reserve(lengthReserving);
+    //text.reserve(lengthReserving);
 }
 
 int FrameRender::EvaluateImageLength() const
@@ -35,13 +40,13 @@ int FrameRender::EvaluateImageLength() const
     return result;
 }
 
-FrameRender FrameRender::Render(const Player& attackingPlayer, const Player& attackedPlayer)
+FrameRender FrameRender::Render(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition)
 {
     FrameRender result = FrameRender();
 
     result.ReserveMemory();
     result.AddPlayerTextsLine();
-    result.AddPlayersMapsLines(attackingPlayer, attackedPlayer);
+    result.AddPlayersMapsLines(attackingPlayer, attackedPlayer, actionPosition);
     result.AddAskingPlayerForActionLine();
 
     return result;
@@ -50,7 +55,7 @@ FrameRender FrameRender::Render(const Player& attackingPlayer, const Player& att
 void FrameRender::Display() const
 {
     std::system("cls");
-    std::cout << text;
+    text.Print();
 }
 
 char GetTileChar(const Tile& tile, const bool fogOfWar)
@@ -73,47 +78,44 @@ char GetTileChar(const SeaMap& seaMap, const std::pair<int, int> position, const
     return GetTileChar(seaMap.GetTileConst(position), !seaMap.IsScanned(position));
 }
 
-std::string GetMapRowAsText(const SeaMap& seaMap, const int y, const bool fogOfWar)
+void FrameRender::AddMapRow(const SeaMap& seaMap, const std::pair<int, int> actionPosition, const int y, const bool fogOfWar)
 {
     const int width = seaMap.size.first;
-
-    std::string result;
-    result.reserve(width);
 
     for (int x = 0; x < width; x++)
     {
         std::pair<int, int> position = std::pair<int, int>(x, y);
-        
-        result += GetTileChar(seaMap, position, fogOfWar);
+        ConsoleTextAttribute attribute = position == actionPosition ? PointedAtTileAttribute : MapTextAttribute;
+        text.Append(attribute, GetTileChar(seaMap, position, fogOfWar));
     }
-
-    return result;
 }
 
 void FrameRender::AddPlayerTextsLine()
 {
-    text += CurrentPlayerMapText;
+    text.Append(PlayerTextsAttribute, CurrentPlayerMapText);
+
     const int GapBetweenPlayerTextsLength = mapSize.first + GapBetweenMaps.length() - CurrentPlayerMapText.length();
-    text += std::string(GapBetweenPlayerTextsLength, ' ');
-    text += CurrentEnemyMapText;
-    text += '\n';
+    text.Append(PlayerTextsAttribute, std::string(GapBetweenPlayerTextsLength, ' '));
+
+    text.Append(PlayerTextsAttribute, CurrentEnemyMapText);
+    text.Append(PlayerTextsAttribute, '\n');
 }
 
-void FrameRender::AddPlayersMapsLines(const Player& attackingPlayer, const Player& attackedPlayer)
+void FrameRender::AddPlayersMapsLines(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition)
 {
     const SeaMap& attackingPlayerMap = attackingPlayer.GetMap();
     const SeaMap& attackedPlayerMap = attackedPlayer.GetMap();
 
     for (int y = 0; y < mapSize.second; y++)
     {
-        text += GetMapRowAsText(attackingPlayerMap, y, false);
-        text += GapBetweenMaps;
-        text += GetMapRowAsText(attackedPlayerMap, y, true);
-        text += '\n';
+        AddMapRow(attackingPlayerMap, actionPosition, y, false);
+        text.Append(MapTextAttribute, GapBetweenMaps);
+        AddMapRow(attackedPlayerMap, actionPosition, y, true);
+        text.Append(MapTextAttribute, '\n');
     }
 }
 
 void FrameRender::AddAskingPlayerForActionLine()
 {
-    text += AskingPlayerForActionText;
+    text.Append(AskingPlayerForActionAttribute, AskingPlayerForActionText);
 }

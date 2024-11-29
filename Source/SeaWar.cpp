@@ -1,6 +1,7 @@
 #include "SeaWar.h"
 #include <conio.h>
 #include "FrameRender.h"
+#include "ConsoleTextAttribute.h"
 
 void SeaWar::Run()
 {
@@ -19,6 +20,7 @@ void SeaWar::Initialization()
     SetRandomSeed();
     InitializePlayers();
     SetAttackingAndAttackedMaps();
+    ConsoleTextAttribute::InitializeSTDHandle();
 }
 
 void SeaWar::SetRandomSeed()
@@ -48,7 +50,7 @@ void SeaWar::Render()
 
 FrameRender SeaWar::GenerateImage()
 {
-    return FrameRender::Render(*AttackingPlayer, *AttackedPlayer);
+    return FrameRender::Render(*AttackingPlayer, *AttackedPlayer, actionPosition);
 }
 
 void SeaWar::Input()

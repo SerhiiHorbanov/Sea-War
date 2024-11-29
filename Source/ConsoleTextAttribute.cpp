@@ -32,16 +32,19 @@ void ConsoleTextAttribute::SetForeGroundColor(ConsoleColor color)
     _textAttribute &= InvertedForeGroundColorMask;
     _textAttribute += (uint32_t)color;
 }
-ConsoleColor ConsoleTextAttribute::GetForeGroundColor()
+
+ConsoleColor ConsoleTextAttribute::GetForeGroundColor() const
 {
     return (ConsoleColor)(_textAttribute & ForeGroundColorMask);
 }
+
 void ConsoleTextAttribute::SetBackGroundColor(ConsoleColor color)
 {
     _textAttribute &= InvertedBackGroundColorMask;
     _textAttribute += (uint32_t)color << 4;
 }
-ConsoleColor ConsoleTextAttribute::GetBackGroundColor()
+
+ConsoleColor ConsoleTextAttribute::GetBackGroundColor() const
 {
     return (ConsoleColor)(_textAttribute & BackGroundColorMask);
 }
@@ -51,34 +54,41 @@ void ConsoleTextAttribute::SetTopEdge(bool enabled)
     _textAttribute &= InvertedTopEdgeMask;
     _textAttribute += TopEdgeMask * enabled;
 }
-bool ConsoleTextAttribute::GetTopEdge()
+
+bool ConsoleTextAttribute::GetTopEdge() const
 {
     return _textAttribute & TopEdgeMask;
 }
+
 void ConsoleTextAttribute::SetBottomEdge(bool enabled)
 {
     _textAttribute &= InvertedBottomEdgeMask;
     _textAttribute += BottomEdgeMask * enabled;
 }
-bool ConsoleTextAttribute::GetBottomEdge()
+
+bool ConsoleTextAttribute::GetBottomEdge() const
 {
     return (_textAttribute & BottomEdgeMask) != 0;
 }
+
 void ConsoleTextAttribute::SetRightEdge(bool enabled)
 {
     _textAttribute &= InvertedTopEdgeMask;
     _textAttribute += TopEdgeMask * enabled;
 }
-bool ConsoleTextAttribute::GetRightEdge()
+
+bool ConsoleTextAttribute::GetRightEdge() const
 {
     return _textAttribute & RightEdgeMask;
 }
+
 void ConsoleTextAttribute::SetLeftEdge(bool enabled)
 {
     _textAttribute &= InvertedLeftEdgeMask;
     _textAttribute += LeftEdgeMask * enabled;
 }
-bool ConsoleTextAttribute::GetLeftEdge()
+
+bool ConsoleTextAttribute::GetLeftEdge() const
 {
     return _textAttribute & LeftEdgeMask;
 }
@@ -88,7 +98,8 @@ void ConsoleTextAttribute::SetInvertColors(bool enabled)
     _textAttribute &= InvertedInvertColorsMask;
     _textAttribute += InvertColorsMask * enabled;
 }
-bool ConsoleTextAttribute::GetInvertColors()
+
+bool ConsoleTextAttribute::GetInvertColors() const
 {
     return _textAttribute & InvertColorsMask;
 }
@@ -98,7 +109,17 @@ void ConsoleTextAttribute::Reset()
     _textAttribute = DefaultAttribute;
 }
 
-void ConsoleTextAttribute::Apply()
+uint32_t ConsoleTextAttribute::GetAsUint32() const
+{
+    return _textAttribute;
+}
+
+void ConsoleTextAttribute::Apply() const
 {
     SetConsoleTextAttribute(handle, _textAttribute);
+}
+
+bool operator==(ConsoleTextAttribute left, ConsoleTextAttribute right)
+{
+    return left.GetAsUint32() == right.GetAsUint32();
 }

@@ -48,25 +48,29 @@ public:
     static void InitializeSTDHandle();
 
     void SetForeGroundColor(ConsoleColor color);
-    ConsoleColor GetForeGroundColor();
+    ConsoleColor GetForeGroundColor() const;
     void SetBackGroundColor(ConsoleColor color);
-    ConsoleColor GetBackGroundColor();
+    ConsoleColor GetBackGroundColor() const;
 
     void SetTopEdge(bool enabled);
-    bool GetTopEdge();
+    bool GetTopEdge() const;
     void SetBottomEdge(bool enabled);
-    bool GetBottomEdge();
+    bool GetBottomEdge() const;
     void SetRightEdge(bool enabled);
-    bool GetRightEdge();
+    bool GetRightEdge() const;
     void SetLeftEdge(bool enabled);
-    bool GetLeftEdge();
+    bool GetLeftEdge() const;
 
     void SetInvertColors(bool enabled);
-    bool GetInvertColors();
+    bool GetInvertColors() const;
 
     void Reset();
 
-    void Apply();
+    uint32_t GetAsUint32() const;
+
+    void Apply() const;
 private:
     uint32_t _textAttribute;
 };
+
+bool operator ==(ConsoleTextAttribute left, ConsoleTextAttribute right);

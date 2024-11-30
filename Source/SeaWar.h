@@ -26,9 +26,9 @@ public:
 private:
     void Initialization();
 
-    bool GameContinues();
+    bool GameContinues() const;
 
-    void Render();
+    void Render() const;
     void Input();
     void Update();
 
@@ -36,9 +36,9 @@ private:
     void InitializePlayers();
     void SetAttackingAndAttackedMaps();
 
-    FrameRender GenerateImage();
+    FrameRender GenerateImage() const;
 
-    char EnterInput();
+    char EnterInput() const;
     void ProcessInput(const char input);
     void TryMoveActionPosition(const std::pair<int, int> delta);
 

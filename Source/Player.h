@@ -23,10 +23,9 @@ public:
     void ScanAtPosition(const std::pair<int, int> position);
 
     const SeaMap& GetMap() const;
-    const Tile& GetMapTile(const std::pair<int, int> position) const;
 
     int GetRadarsLeft() const;
     bool IsBot() const;
-    bool HasLost();
+    bool HasLost() const;
 };
 

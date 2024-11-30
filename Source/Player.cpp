@@ -39,12 +39,7 @@ const SeaMap& Player::GetMap() const
     return *_map;
 }
 
-const Tile& Player::GetMapTile(const std::pair<int, int> position) const
-{
-    return _map->GetTileConst(position);
-}
-
-bool Player::HasLost()
+bool Player::HasLost() const
 {
     return !_map->AnyShipsLeft;
 }

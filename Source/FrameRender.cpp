@@ -47,20 +47,6 @@ int FrameRender::EvaluateImageLength() const
     return result;
 }
 
-FrameRender FrameRender::Render(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition)
-{
-    FrameRender result = FrameRender();
-
-    result.InitializeAreBothPlayersBots(attackingPlayer, attackedPlayer);
-    result.ReserveMemory();
-    result.AddPlayerTextsLine();
-    result.AddPlayersMapsLines(attackingPlayer, attackedPlayer, actionPosition);
-    result.AddTipLine();
-    result.AddPlayersRadarScansLeftText(attackingPlayer);
-
-    return result;
-}
-
 void FrameRender::Display() const
 {
     std::system("cls");
@@ -68,6 +54,16 @@ void FrameRender::Display() const
 
     if (_areBothPlayersBots)
         Sleep(SleepMilliseconds);
+}
+
+void FrameRender::Render(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition)
+{
+    InitializeAreBothPlayersBots(attackingPlayer, attackedPlayer);
+    ReserveMemory();
+    AddPlayerTextsLine();
+    AddPlayersMapsLines(attackingPlayer, attackedPlayer, actionPosition);
+    AddTipLine();
+    AddPlayersRadarScansLeftText(attackingPlayer);
 }
 
 void FrameRender::InitializeAreBothPlayersBots(const Player& attackingPlayer, const Player& attackedPlayer)

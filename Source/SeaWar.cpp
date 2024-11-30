@@ -44,15 +44,17 @@ void SeaWar::SetAttackingAndAttackedMaps()
     AttackedPlayer = P2Map.get();
 }
 
-void SeaWar::Render()
+void SeaWar::Render() const
 {
     const FrameRender render = GenerateImage();
     render.Display();
 }
 
-FrameRender SeaWar::GenerateImage()
+FrameRender SeaWar::GenerateImage() const
 {
-    return FrameRender::Render(*AttackingPlayer, *AttackedPlayer, actionPosition);
+    FrameRender render = FrameRender();
+    render.Render(*AttackingPlayer, *AttackedPlayer, actionPosition);
+    return render;
 }
 
 void SeaWar::Input()
@@ -61,7 +63,7 @@ void SeaWar::Input()
     ProcessInput(input);
 }
 
-char SeaWar::EnterInput()
+char SeaWar::EnterInput() const
 {
     if (AreBothPlayersBots())
         return DefaultInput;
@@ -159,7 +161,7 @@ bool SeaWar::AreBothPlayersBots() const
     return P1Map->IsBot() && P2Map->IsBot();
 }
 
-bool SeaWar::GameContinues()
+bool SeaWar::GameContinues() const
 {
     return !P1Map->HasLost() && !P2Map->HasLost();
 }

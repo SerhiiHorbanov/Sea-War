@@ -10,13 +10,13 @@ private:
     std::shared_ptr<MultiAttributedText> _text;
     bool _areBothPlayersBots;
 
+public:
     FrameRender() :
         _text(std::shared_ptr<MultiAttributedText>(new MultiAttributedText())),        
         _areBothPlayersBots()
     {}
 
-public:
-    static FrameRender Render(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition);
+    void Render(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition);
     void Display() const;
 
 private:

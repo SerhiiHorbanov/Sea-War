@@ -44,6 +44,11 @@ void MultiAttributedText::Append(const char character)
 	_text += character;
 }
 
+void MultiAttributedText::Reserve(const size_t size)
+{
+	_text.reserve(size);
+}
+
 void MultiAttributedText::TryAddAttributeAtEnd(const ConsoleTextAttribute attribute)
 {
 	const int attributesAmount = _attributes.size();

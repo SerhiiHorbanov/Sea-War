@@ -25,7 +25,7 @@ const char fogOfWarChar = '#';
 void FrameRender::ReserveMemory()
 {
     const int lengthReserving = EvaluateImageLength();
-    //text.reserve(lengthReserving);
+    _text->Reserve(lengthReserving);
 }
 
 int FrameRender::EvaluateImageLength() const
@@ -40,6 +40,9 @@ int FrameRender::EvaluateImageLength() const
     result += mapSize.second;// newlines between rows of maps
     result++;// newline
     result += TipText.length();
+    result++;// newline
+    result += PlayerRadarScansLeftText.length();
+    result++;// scans left amount number length
 
     return result;
 }

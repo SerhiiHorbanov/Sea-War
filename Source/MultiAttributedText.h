@@ -30,6 +30,8 @@ public:
 	void Append(const std::string& text);
 	void Append(const char character);
 
+	void Reserve(const size_t size);
+
 private:
 	int GetAttributeStartIndexPairForTextIndex(const int index) const;
 

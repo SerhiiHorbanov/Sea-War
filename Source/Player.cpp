@@ -19,10 +19,9 @@ ShootingResult Player::ShootAtPosition(const std::pair<int, int> position)
     return _map->ShootAtTile(position);
 }
 
-void Player::TryScanAtPosition(const std::pair<int, int> position)
+void Player::ScanAtPosition(const std::pair<int, int> position)
 {
-    if (TryConsumeRadarScan())
-        _map->ScanAtPosition(position);
+    _map->ScanAtPosition(position);
 }
 
 int Player::GetRadarsLeft() const

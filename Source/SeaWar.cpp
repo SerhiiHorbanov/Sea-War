@@ -150,7 +150,8 @@ void SeaWar::SwapAttackingPlayer()
 
 void SeaWar::Scan(const std::pair<int, int> position)
 {
-    AttackedPlayer->TryScanAtPosition(position);
+    if (AttackingPlayer->TryConsumeRadarScan())
+        AttackedPlayer->ScanAtPosition(position);
 }
 
 bool SeaWar::AreBothPlayersBots() const

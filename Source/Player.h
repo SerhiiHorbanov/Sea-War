@@ -15,13 +15,12 @@ private:
         _isBot(isBot)
     {}
 
-    bool TryConsumeRadarScan();
-
 public:
+    bool TryConsumeRadarScan();
     static std::shared_ptr<Player> CreateNewPlayer(const bool isBot);
 
     ShootingResult ShootAtPosition(const std::pair<int, int> position);
-    void TryScanAtPosition(const std::pair<int, int> position);
+    void ScanAtPosition(const std::pair<int, int> position);
 
     const SeaMap& GetMap() const;
     const Tile& GetMapTile(const std::pair<int, int> position) const;

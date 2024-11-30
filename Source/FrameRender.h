@@ -5,13 +5,18 @@
 
 struct FrameRender
 {
-public:
+private:
     MultiAttributedText text;
+    bool areBothPlayersBots;
 
     FrameRender() = default;
 
+public:
     static FrameRender Render(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition);
     void Display() const;
+
+private:
+    void InitializeAreBothPlayersBots(const Player& attackingPlayer, const Player& attackedPlayer);
 
     void ReserveMemory();
     int EvaluateImageLength() const;

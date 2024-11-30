@@ -3,6 +3,8 @@
 #include "FrameRender.h"
 #include "ConsoleTextAttribute.h"
 
+const char DefaultInput = ' ';
+
 void SeaWar::Run()
 {
     Initialization();
@@ -61,6 +63,8 @@ void SeaWar::Input()
 
 char SeaWar::EnterInput()
 {
+    if (AreBothPlayersBots())
+        return DefaultInput;
     return _getch();
 }
 
@@ -101,12 +105,21 @@ void SeaWar::TryMoveActionPosition(const std::pair<int, int> delta)
 
 void SeaWar::Update()
 {
+    HandlePlayerActions();
+}
+
+void SeaWar::HandlePlayerActions()
+{
     PerformAction(actionType, actionPosition);
-    while(AttackingPlayer->IsBot())
+
+    if (!AttackingPlayer->IsBot())
+        return;
+
+    do
     {
         const std::pair<int, int> botActionPosition = AttackedPlayer->GetMap().GetRandomNotShotTile();
-        PerformAction(actionType, botActionPosition);
-    }
+        PerformAction(TurnActionType::Shoot, botActionPosition);
+    } while (AttackingPlayer->IsBot() && !AttackedPlayer->IsBot());
 }
 
 void SeaWar::PerformAction(const TurnActionType actionType, const std::pair<int, int> position)
@@ -138,6 +151,11 @@ void SeaWar::SwapAttackingPlayer()
 void SeaWar::Scan(const std::pair<int, int> position)
 {
     AttackedPlayer->TryScanAtPosition(position);
+}
+
+bool SeaWar::AreBothPlayersBots() const
+{
+    return P1Map->IsBot() && P2Map->IsBot();
 }
 
 bool SeaWar::GameContinues()

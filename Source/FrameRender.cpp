@@ -1,6 +1,6 @@
 #include "FrameRender.h"
 #include <iostream>
-
+#include <Windows.h>
 const std::string CurrentPlayerMapText = "Your map:";
 const std::string CurrentEnemyMapText = "Enemy map:";
 const std::string GapBetweenMaps = "          ";
@@ -10,6 +10,8 @@ const ConsoleTextAttribute PlayerTextsAttribute = ConsoleTextAttribute();
 const ConsoleTextAttribute MapTextAttribute = ConsoleTextAttribute();
 const ConsoleTextAttribute PointedAtTileAttribute = ConsoleTextAttribute(ConsoleColor::Black, ConsoleColor::Red);//, false, false, false, false, true);
 const ConsoleTextAttribute TipTextAttribute = ConsoleTextAttribute(ConsoleColor::LightGreen);
+
+const int SleepMilliseconds = 1000;
 
 const std::pair<char, char> tileTextures[] =
 {
@@ -44,6 +46,7 @@ FrameRender FrameRender::Render(const Player& attackingPlayer, const Player& att
 {
     FrameRender result = FrameRender();
 
+    result.InitializeAreBothPlayersBots(attackingPlayer, attackedPlayer);
     result.ReserveMemory();
     result.AddPlayerTextsLine();
     result.AddPlayersMapsLines(attackingPlayer, attackedPlayer, actionPosition);
@@ -56,6 +59,14 @@ void FrameRender::Display() const
 {
     std::system("cls");
     text.Print();
+
+    if (areBothPlayersBots)
+        Sleep(SleepMilliseconds);
+}
+
+void FrameRender::InitializeAreBothPlayersBots(const Player& attackingPlayer, const Player& attackedPlayer)
+{
+    areBothPlayersBots = attackedPlayer.IsBot() && attackingPlayer.IsBot();
 }
 
 char GetTileChar(const Tile& tile, const bool fogOfWar)
@@ -116,7 +127,7 @@ void FrameRender::AddPlayersMapsLines(const Player& attackingPlayer, const Playe
     {
         AddMapRow(attackingPlayerMap, actionPosition, y, false);
         text.Append(MapTextAttribute, GapBetweenMaps);
-        AddMapRow(attackedPlayerMap, actionPosition, y, true);
+        AddMapRow(attackedPlayerMap, actionPosition, y, !areBothPlayersBots);
         text.Append(MapTextAttribute, '\n');
     }
 }

@@ -15,7 +15,7 @@ const int SleepMilliseconds = 1000;
 
 const std::pair<char, char> tileTextures[] =
 {
-    {'~', '~'},// TileType::Sea
+    {'~', '-'},// TileType::Sea
     {'W', 'x'},// TileType::Warship
 };
 const char fogOfWarChar = '#';

@@ -42,10 +42,12 @@ private:
     void ProcessInput(const char input);
     void TryMoveActionPosition(const std::pair<int, int> delta);
 
-    void TryPerformAction();
+    void PerformAction(const TurnActionType actionType, const std::pair<int, int> position);
 
-    void Scan();
-    void Shoot();
+    
+
+    void Scan(const std::pair<int, int> position); 
+    void Shoot(const std::pair<int, int> position);
     
     void SwapAttackingPlayer();
 };

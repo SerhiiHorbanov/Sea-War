@@ -101,25 +101,30 @@ void SeaWar::TryMoveActionPosition(const std::pair<int, int> delta)
 
 void SeaWar::Update()
 {
-    TryPerformAction();
+    PerformAction(actionType, actionPosition);
+    while(AttackingPlayer->IsBot())
+    {
+        const std::pair<int, int> botActionPosition = AttackedPlayer->GetMap().GetRandomNotShotTile();
+        PerformAction(actionType, botActionPosition);
+    }
 }
 
-void SeaWar::TryPerformAction()
+void SeaWar::PerformAction(const TurnActionType actionType, const std::pair<int, int> position)
 {
     switch (actionType)
     {
     case TurnActionType::Shoot:
-        Shoot();
+        Shoot(position);
         break;
     case TurnActionType::RadarScan:
-        Scan();
+        Scan(position);
         break;
     }
 }
 
-void SeaWar::Shoot()
+void SeaWar::Shoot(const std::pair<int, int> position)
 {
-    const ShootingResult shootingResult = AttackedPlayer->ShootAtPosition(actionPosition);
+    const ShootingResult shootingResult = AttackedPlayer->ShootAtPosition(position);
 
     if (shootingResult == ShootingResult::Miss)
         SwapAttackingPlayer();
@@ -130,9 +135,9 @@ void SeaWar::SwapAttackingPlayer()
     std::swap(AttackingPlayer, AttackedPlayer);
 }
 
-void SeaWar::Scan()
+void SeaWar::Scan(const std::pair<int, int> position)
 {
-    AttackedPlayer->TryScanAtPosition(actionPosition);
+    AttackedPlayer->TryScanAtPosition(position);
 }
 
 bool SeaWar::GameContinues()

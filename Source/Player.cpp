@@ -4,7 +4,7 @@ std::shared_ptr<Player> Player::CreateNewPlayer()
 {
     std::shared_ptr<SeaMap> map = SeaMap::GenerateRandomSeaMap(mapSize);
 
-    return std::shared_ptr<Player>(new Player(map, 5));
+    return std::shared_ptr<Player>(new Player(map, 5, false));
 }
 
 bool Player::TryConsumeRadarScan()
@@ -23,6 +23,11 @@ void Player::TryScanAtPosition(const std::pair<int, int> position)
 {
     if (TryConsumeRadarScan())
         _map->ScanAtPosition(position);
+}
+
+bool Player::IsBot() const
+{
+    return _isBot;
 }
 
 const SeaMap& Player::GetMap() const

@@ -80,6 +80,29 @@ bool SeaMap::IsScanned(const std::pair<int, int> position) const
     return GetDistanceSquaredToScannedPosition(position) < ScanningRadius;
 }
 
+std::pair<int, int> SeaMap::GetRandomNotShotTile() const
+{
+    std::vector<int> notShotTilesIndecies;
+    notShotTilesIndecies.reserve(size.first * size.second);
+    
+    const int tilesAmount = tiles.size();
+
+    for (int i = 0; i < tilesAmount; i++)
+    {
+        if (!tiles[i].WasShot)
+            notShotTilesIndecies.push_back(i);
+    }
+
+    const int notShotTilesAmount = notShotTilesIndecies.size();
+    if (notShotTilesIndecies.size() == 0)
+        return {0, 0};
+
+    const int index = std::rand() % notShotTilesAmount;
+    const int y = notShotTilesIndecies[index] / size.first;
+    const int x = notShotTilesIndecies[index] % size.first;
+    return {x, y};
+}
+
 // for now just tries to place a warship 10 times
 std::shared_ptr<SeaMap> SeaMap::GenerateRandomSeaMap(const std::pair<int, int> size)
 {

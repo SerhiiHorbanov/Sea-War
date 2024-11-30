@@ -42,6 +42,8 @@ struct SeaMap
     int GetDistanceSquaredToScannedPosition(const std::pair<int, int> position) const;
     bool IsScanned(const std::pair<int, int> position) const;
 
+    std::pair<int, int> GetRandomNotShotTile() const;
+
     static std::shared_ptr<SeaMap> GenerateRandomSeaMap(const std::pair<int, int> size);
 };
 const std::pair<int, int> mapSize = std::pair<int, int>(10, 10);

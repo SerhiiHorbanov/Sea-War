@@ -61,15 +61,15 @@ FrameRender FrameRender::Render(const Player& attackingPlayer, const Player& att
 void FrameRender::Display() const
 {
     std::system("cls");
-    text.Print();
+    _text->Print();
 
-    if (areBothPlayersBots)
+    if (_areBothPlayersBots)
         Sleep(SleepMilliseconds);
 }
 
 void FrameRender::InitializeAreBothPlayersBots(const Player& attackingPlayer, const Player& attackedPlayer)
 {
-    areBothPlayersBots = attackedPlayer.IsBot() && attackingPlayer.IsBot();
+    _areBothPlayersBots = attackedPlayer.IsBot() && attackingPlayer.IsBot();
 }
 
 char GetTileChar(const Tile& tile, const bool fogOfWar)
@@ -106,25 +106,45 @@ void FrameRender::AddMapRow(const SeaMap& seaMap, const std::pair<int, int> acti
         if (actionPosition == position && fogOfWar)
             attribute = PointedAtTileAttribute;
 
-        text.Append(attribute, GetTileChar(seaMap, position, fogOfWar));
+        _text->Append(attribute, GetTileChar(seaMap, position, fogOfWar));
     }
 }
 
 void FrameRender::AddPlayerTextsLine()
 {
-    text.Append(PlayerTextsAttribute, CurrentPlayerMapText);
+    AddText(PlayerTextsAttribute, CurrentPlayerMapText);
 
     const int GapBetweenPlayerTextsLength = mapSize.first + GapBetweenMaps.length() - CurrentPlayerMapText.length();
-    text.Append(PlayerTextsAttribute, std::string(GapBetweenPlayerTextsLength, ' '));
+    AddText(PlayerTextsAttribute, std::string(GapBetweenPlayerTextsLength, ' '));
 
-    text.Append(PlayerTextsAttribute, CurrentEnemyMapText);
-    text.Append(PlayerTextsAttribute, '\n');
+    AddText(PlayerTextsAttribute, CurrentEnemyMapText);
+    AddChar(PlayerTextsAttribute, '\n');
+}
+
+void FrameRender::AddText(const ConsoleTextAttribute attribute, const std::string& text)
+{
+    _text->Append(attribute, text);
+}
+
+void FrameRender::AddText(const std::string& text)
+{
+    _text->Append(text);
+}
+
+void FrameRender::AddChar(const ConsoleTextAttribute attribute, const char character)
+{
+    _text->Append(attribute, character);
+}
+
+void FrameRender::AddChar(const char character)
+{
+    _text->Append(character);
 }
 
 void FrameRender::AddPlayersRadarScansLeftText(const Player& attackingPlayer)
 {
-    text.Append(PlayerRadarScansLeftText);
-    text.Append(std::to_string(attackingPlayer.GetRadarsLeft()));
+    AddText(PlayerRadarScansLeftText);
+    AddText(std::to_string(attackingPlayer.GetRadarsLeft()));
 }
 
 void FrameRender::AddPlayersMapsLines(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition)
@@ -135,13 +155,13 @@ void FrameRender::AddPlayersMapsLines(const Player& attackingPlayer, const Playe
     for (int y = 0; y < mapSize.second; y++)
     {
         AddMapRow(attackingPlayerMap, actionPosition, y, false);
-        text.Append(MapTextAttribute, GapBetweenMaps);
-        AddMapRow(attackedPlayerMap, actionPosition, y, !areBothPlayersBots);
-        text.Append(MapTextAttribute, '\n');
+        AddText(MapTextAttribute, GapBetweenMaps);
+        AddMapRow(attackedPlayerMap, actionPosition, y, !_areBothPlayersBots);
+        AddChar(MapTextAttribute, '\n');
     }
 }
 
 void FrameRender::AddTipLine()
 {
-    text.Append(TipTextAttribute, TipText);
+    AddText(TipTextAttribute, TipText);
 }

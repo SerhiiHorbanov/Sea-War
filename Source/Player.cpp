@@ -1,10 +1,10 @@
 #include "Player.h"
 
-std::shared_ptr<Player> Player::CreateNewPlayer()
+std::shared_ptr<Player> Player::CreateNewPlayer(const bool isBot)
 {
     std::shared_ptr<SeaMap> map = SeaMap::GenerateRandomSeaMap(mapSize);
 
-    return std::shared_ptr<Player>(new Player(map, 5, false));
+    return std::shared_ptr<Player>(new Player(map, 5, isBot));
 }
 
 bool Player::TryConsumeRadarScan()

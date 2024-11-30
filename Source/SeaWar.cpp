@@ -32,8 +32,8 @@ void SeaWar::InitializePlayers()
 {
     P1Map.reset();
     P2Map.reset();
-    P1Map = Player::CreateNewPlayer();
-    P2Map = Player::CreateNewPlayer();
+    P1Map = Player::CreateNewPlayer(false);
+    P2Map = Player::CreateNewPlayer(false);
 }
 
 void SeaWar::SetAttackingAndAttackedMaps()

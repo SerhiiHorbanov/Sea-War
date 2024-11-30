@@ -18,7 +18,7 @@ private:
     bool TryConsumeRadarScan();
 
 public:
-    static std::shared_ptr<Player> CreateNewPlayer();
+    static std::shared_ptr<Player> CreateNewPlayer(const bool isBot);
 
     ShootingResult ShootAtPosition(const std::pair<int, int> position);
     void TryScanAtPosition(const std::pair<int, int> position);

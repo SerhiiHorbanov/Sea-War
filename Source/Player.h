@@ -23,10 +23,11 @@ public:
     ShootingResult ShootAtPosition(const std::pair<int, int> position);
     void TryScanAtPosition(const std::pair<int, int> position);
 
-    bool IsBot() const;
     const SeaMap& GetMap() const;
     const Tile& GetMapTile(const std::pair<int, int> position) const;
 
+    int GetRadarsLeft() const;
+    bool IsBot() const;
     bool HasLost();
 };
 

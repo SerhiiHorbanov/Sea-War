@@ -25,6 +25,11 @@ void Player::TryScanAtPosition(const std::pair<int, int> position)
         _map->ScanAtPosition(position);
 }
 
+int Player::GetRadarsLeft() const
+{
+    return _radarScansLeft;
+}
+
 bool Player::IsBot() const
 {
     return _isBot;

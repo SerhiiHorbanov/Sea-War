@@ -1,10 +1,12 @@
 #include "FrameRender.h"
 #include <iostream>
 #include <Windows.h>
+
 const std::string CurrentPlayerMapText = "Your map:";
 const std::string CurrentEnemyMapText = "Enemy map:";
 const std::string GapBetweenMaps = "          ";
 const std::string TipText = "press W/A/S/D to move. press E to shoot. press R to scan with radar\n";
+const std::string PlayerRadarScansLeftText = "radar scans left:";
 
 const ConsoleTextAttribute PlayerTextsAttribute = ConsoleTextAttribute();
 const ConsoleTextAttribute MapTextAttribute = ConsoleTextAttribute();
@@ -51,6 +53,7 @@ FrameRender FrameRender::Render(const Player& attackingPlayer, const Player& att
     result.AddPlayerTextsLine();
     result.AddPlayersMapsLines(attackingPlayer, attackedPlayer, actionPosition);
     result.AddTipLine();
+    result.AddPlayersRadarScansLeftText(attackingPlayer);
 
     return result;
 }
@@ -116,6 +119,12 @@ void FrameRender::AddPlayerTextsLine()
 
     text.Append(PlayerTextsAttribute, CurrentEnemyMapText);
     text.Append(PlayerTextsAttribute, '\n');
+}
+
+void FrameRender::AddPlayersRadarScansLeftText(const Player& attackingPlayer)
+{
+    text.Append(PlayerRadarScansLeftText);
+    text.Append(std::to_string(attackingPlayer.GetRadarsLeft()));
 }
 
 void FrameRender::AddPlayersMapsLines(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition)

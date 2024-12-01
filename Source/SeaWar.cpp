@@ -124,9 +124,9 @@ void SeaWar::HandlePlayerActions()
     } while (AttackingPlayer->IsBot() && !AttackedPlayer->IsBot());
 }
 
-void SeaWar::PerformAction(const TurnActionType actionType, const std::pair<int, int> position)
+void SeaWar::PerformAction(const TurnActionType type, const std::pair<int, int> position)
 {
-    switch (actionType)
+    switch (type)
     {
     case TurnActionType::Shoot:
         Shoot(position);
@@ -150,7 +150,7 @@ void SeaWar::SwapAttackingPlayer()
     std::swap(AttackingPlayer, AttackedPlayer);
 }
 
-void SeaWar::Scan(const std::pair<int, int> position)
+void SeaWar::Scan(const std::pair<int, int> position) const
 {
     if (AttackingPlayer->TryConsumeRadarScan())
         AttackedPlayer->ScanAtPosition(position);

@@ -28,7 +28,7 @@ struct SeaMap
     {}
 
     void UpdateAnyShipsLeft();
-    bool ContainsAnyAliveShips();
+    bool ContainsAnyAliveShips() const;
 
     int GetPositionIndex(const std::pair<int, int> position) const;
     bool IsInBounds(const std::pair<int, int> position) const;

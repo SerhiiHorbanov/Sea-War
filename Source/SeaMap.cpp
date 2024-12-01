@@ -7,7 +7,7 @@ void SeaMap::UpdateAnyShipsLeft()
     AnyShipsLeft = ContainsAnyAliveShips();
 }
 
-bool SeaMap::ContainsAnyAliveShips()
+bool SeaMap::ContainsAnyAliveShips() const
 {
     const int tilesAmount = tiles.size();
 

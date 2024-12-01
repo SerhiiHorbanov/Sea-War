@@ -44,9 +44,9 @@ private:
 
     void HandlePlayerActions();
 
-    void PerformAction(const TurnActionType actionType, const std::pair<int, int> position);
+    void PerformAction(const TurnActionType type, const std::pair<int, int> position);
 
-    void Scan(const std::pair<int, int> position); 
+    void Scan(const std::pair<int, int> position) const; 
     void Shoot(const std::pair<int, int> position);
     
     void SwapAttackingPlayer();

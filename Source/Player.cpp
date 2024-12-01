@@ -1,10 +1,12 @@
 #include "Player.h"
 
+constexpr int DefaultRadarScansAmount = 5;
+
 std::shared_ptr<Player> Player::CreateNewPlayer(const bool isBot)
 {
     std::shared_ptr<SeaMap> map = SeaMap::GenerateRandomSeaMap(mapSize);
 
-    return std::shared_ptr<Player>(new Player(map, 5, isBot));
+    return std::shared_ptr<Player>(new Player(0, DefaultRadarScansAmount, map, isBot));
 }
 
 bool Player::TryConsumeRadarScan()
@@ -14,19 +16,34 @@ bool Player::TryConsumeRadarScan()
     return result;
 }
 
-ShootingResult Player::ShootAtPosition(const std::pair<int, int> position)
+void Player::Win()
+{
+    _wins++;
+}
+
+ShootingResult Player::ShootAtPosition(const std::pair<int, int> position) const
 {
     return _map->ShootAtTile(position);
 }
 
-void Player::ScanAtPosition(const std::pair<int, int> position)
+void Player::ScanAtPosition(const std::pair<int, int> position) const
 {
     _map->ScanAtPosition(position);
+}
+
+void Player::RegenerateMap()
+{
+    _map = SeaMap::GenerateRandomSeaMap(mapSize);
 }
 
 int Player::GetRadarsLeft() const
 {
     return _radarScansLeft;
+}
+
+int Player::GetWins() const
+{
+    return _wins;
 }
 
 bool Player::IsBot() const

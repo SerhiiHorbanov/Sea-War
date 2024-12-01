@@ -3,7 +3,8 @@
 #include "Render/FrameRender.h"
 //#include "Render/ConsoleTextAttribute.h"
 
-const char DefaultInput = ' ';
+constexpr char DefaultInput = ' ';
+constexpr int RoundWinsRequiredForGameWin = 3;
 
 void SeaWar::Run()
 {
@@ -108,6 +109,7 @@ void SeaWar::TryMoveActionPosition(const std::pair<int, int> delta)
 void SeaWar::Update()
 {
     HandlePlayerActions();
+    CheckForWinner();
 }
 
 void SeaWar::HandlePlayerActions()
@@ -122,6 +124,26 @@ void SeaWar::HandlePlayerActions()
         const std::pair<int, int> botActionPosition = AttackedPlayer->GetMap()->GetRandomNotShotTile();
         PerformAction(TurnActionType::Shoot, botActionPosition);
     } while (AttackingPlayer->IsBot() && !AttackedPlayer->IsBot());
+}
+
+void SeaWar::ReGeneratePlayerMaps() const
+{
+    P1Map->RegenerateMap();
+    P2Map->RegenerateMap();
+}
+
+void SeaWar::CheckPlayerWon(std::shared_ptr<Player> winner, std::shared_ptr<Player> loser) const
+{
+    if (loser->HasLost())
+    {
+        winner->Win();
+        ReGeneratePlayerMaps();
+    }
+}
+
+void SeaWar::CheckForWinner() const
+{
+    CheckPlayerWon(AttackingPlayer, AttackedPlayer);
 }
 
 void SeaWar::PerformAction(const TurnActionType type, const std::pair<int, int> position)
@@ -163,5 +185,8 @@ bool SeaWar::AreBothPlayersBots() const
 
 bool SeaWar::GameContinues() const
 {
-    return !P1Map->HasLost() && !P2Map->HasLost();
+    bool firstPlayerWonGame = P1Map->GetWins() < RoundWinsRequiredForGameWin;
+    bool secondPlayerWonGame = P2Map->GetWins() < RoundWinsRequiredForGameWin;
+    
+    return  firstPlayerWonGame || secondPlayerWonGame;
 }

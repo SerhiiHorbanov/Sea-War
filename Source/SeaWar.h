@@ -43,6 +43,9 @@ private:
     void TryMoveActionPosition(const std::pair<int, int> delta);
 
     void HandlePlayerActions();
+    void ReGeneratePlayerMaps() const;
+    void CheckPlayerWon(std::shared_ptr<Player> winner, std::shared_ptr<Player> loser) const;
+    void CheckForWinner() const;
 
     void PerformAction(const TurnActionType type, const std::pair<int, int> position);
 

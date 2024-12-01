@@ -5,26 +5,32 @@
 class Player
 {
 private:
+    int _wins;
     int _radarScansLeft;
     std::shared_ptr<SeaMap> _map;
     bool _isBot;
 
-    Player(std::shared_ptr<SeaMap> map, const int radarScansLeft, const bool isBot) :
-        _map(map),
+    Player(const int wins, const int radarScansLeft, std::shared_ptr<SeaMap> map, const bool isBot) :
+        _wins(wins),
         _radarScansLeft(radarScansLeft),
+        _map(map),
         _isBot(isBot)
     {}
 
 public:
-    bool TryConsumeRadarScan();
     static std::shared_ptr<Player> CreateNewPlayer(const bool isBot);
 
-    ShootingResult ShootAtPosition(const std::pair<int, int> position);
-    void ScanAtPosition(const std::pair<int, int> position);
+    bool TryConsumeRadarScan();
+    void Win();
+    
+    ShootingResult ShootAtPosition(const std::pair<int, int> position) const;
+    void ScanAtPosition(const std::pair<int, int> position) const;
 
+    void RegenerateMap();
     const std::shared_ptr<SeaMap> GetMap() const;
 
     int GetRadarsLeft() const;
+    int GetWins() const;
     bool IsBot() const;
     bool HasLost() const;
 };

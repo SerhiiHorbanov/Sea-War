@@ -41,6 +41,7 @@ struct SeaMap
     void ScanAtPosition(const std::pair<int, int> position);
     int GetDistanceSquaredToScannedPosition(const std::pair<int, int> position) const;
     bool IsScanned(const std::pair<int, int> position) const;
+    bool HasFogOfWarAtPosition(const std::pair<int, int> position) const;
 
     std::pair<int, int> GetRandomNotShotTile() const;
 

@@ -80,16 +80,14 @@ char GetTileChar(const Tile& tile, const bool fogOfWar)
     return tile.WasShot ? currentTilePossibleTextures.second : currentTilePossibleTextures.first;
 }
 
-char GetTileChar(const std::shared_ptr<SeaMap> seaMap, const std::pair<int, int> position, const bool fogOfWar)
+char GetTileChar(const std::shared_ptr<SeaMap> seaMap, const std::pair<int, int> position, bool fogOfWar)
 {
     const Tile& tile = seaMap->GetTileConst(position);
 
-    if (!seaMap->scannedWithRadar)
-        return GetTileChar(tile, fogOfWar);
-    else if (!fogOfWar)
-        return GetTileChar(tile, false);
+    if (fogOfWar)
+        fogOfWar &= seaMap->HasFogOfWarAtPosition(position);
 
-    return GetTileChar(tile, !seaMap->IsScanned(position));
+    return GetTileChar(tile, fogOfWar);
 }
 
 void FrameRender::AddMapRow(const std::shared_ptr<SeaMap> seaMap, const std::pair<int, int> actionPosition, const int y, const bool fogOfWar)
@@ -104,7 +102,9 @@ void FrameRender::AddMapRow(const std::shared_ptr<SeaMap> seaMap, const std::pai
         if (actionPosition == position && fogOfWar)
             attribute = PointedAtTileAttribute;
 
-        _text->Append(attribute, GetTileChar(seaMap, position, fogOfWar));
+        const char tileChar = GetTileChar(seaMap, position, fogOfWar);
+        
+        _text->Append(attribute, tileChar);
     }
 }
 

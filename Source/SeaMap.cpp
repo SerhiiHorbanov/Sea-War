@@ -80,6 +80,13 @@ bool SeaMap::IsScanned(const std::pair<int, int> position) const
     return GetDistanceSquaredToScannedPosition(position) < ScanningRadius;
 }
 
+bool SeaMap::HasFogOfWarAtPosition(const std::pair<int, int> position) const
+{
+    if (scannedWithRadar)
+        return !IsScanned(position);
+    return true;
+}
+
 std::pair<int, int> SeaMap::GetRandomNotShotTile() const
 {
     std::vector<int> notShotTilesIndecies;

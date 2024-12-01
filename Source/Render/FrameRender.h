@@ -2,7 +2,7 @@
 #include <string>
 #include <memory>
 #include "MultiAttributedText.h"
-#include "Player.h"
+#include "../Player.h"
 
 struct FrameRender
 {

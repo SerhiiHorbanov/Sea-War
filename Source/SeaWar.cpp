@@ -1,7 +1,7 @@
 #include "SeaWar.h"
 #include <conio.h>
-#include "FrameRender.h"
-#include "ConsoleTextAttribute.h"
+#include "Render/FrameRender.h"
+//#include "Render/ConsoleTextAttribute.h"
 
 const char DefaultInput = ' ';
 

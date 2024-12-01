@@ -89,24 +89,24 @@ bool SeaMap::HasFogOfWarAtPosition(const std::pair<int, int> position) const
 
 std::pair<int, int> SeaMap::GetRandomNotShotTile() const
 {
-    std::vector<int> notShotTilesIndecies;
-    notShotTilesIndecies.reserve(size.first * size.second);
+    std::vector<int> notShotTilesIndexes;
+    notShotTilesIndexes.reserve(size.first * size.second);
     
     const int tilesAmount = tiles.size();
 
     for (int i = 0; i < tilesAmount; i++)
     {
         if (!tiles[i].WasShot)
-            notShotTilesIndecies.push_back(i);
+            notShotTilesIndexes.push_back(i);
     }
 
-    const int notShotTilesAmount = notShotTilesIndecies.size();
-    if (notShotTilesIndecies.size() == 0)
+    const int notShotTilesAmount = notShotTilesIndexes.size();
+    if (notShotTilesAmount == 0)
         return {0, 0};
 
     const int index = std::rand() % notShotTilesAmount;
-    const int y = notShotTilesIndecies[index] / size.first;
-    const int x = notShotTilesIndecies[index] % size.first;
+    const int y = notShotTilesIndexes[index] / size.first;
+    const int x = notShotTilesIndexes[index] % size.first;
     return {x, y};
 }
 

@@ -1,5 +1,4 @@
 #include "FrameRender.h"
-#include <iostream>
 #include <Windows.h>
 
 const std::string CurrentPlayerMapText = "Your map:";
@@ -56,7 +55,7 @@ void FrameRender::Display() const
         Sleep(SleepMilliseconds);
 }
 
-void FrameRender::Render(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition)
+void FrameRender::Render(const std::shared_ptr<Player> attackingPlayer, const std::shared_ptr<Player> attackedPlayer, const std::pair<int, int> actionPosition)
 {
     InitializeAreBothPlayersBots(attackingPlayer, attackedPlayer);
     ReserveMemory();
@@ -66,9 +65,9 @@ void FrameRender::Render(const Player& attackingPlayer, const Player& attackedPl
     AddPlayersRadarScansLeftText(attackingPlayer);
 }
 
-void FrameRender::InitializeAreBothPlayersBots(const Player& attackingPlayer, const Player& attackedPlayer)
+void FrameRender::InitializeAreBothPlayersBots(const std::shared_ptr<Player> attackingPlayer, const std::shared_ptr<Player> attackedPlayer)
 {
-    _areBothPlayersBots = attackedPlayer.IsBot() && attackingPlayer.IsBot();
+    _areBothPlayersBots = attackedPlayer->IsBot() && attackingPlayer->IsBot();
 }
 
 char GetTileChar(const Tile& tile, const bool fogOfWar)
@@ -81,21 +80,21 @@ char GetTileChar(const Tile& tile, const bool fogOfWar)
     return tile.WasShot ? currentTilePossibleTextures.second : currentTilePossibleTextures.first;
 }
 
-char GetTileChar(const SeaMap& seaMap, const std::pair<int, int> position, const bool fogOfWar)
+char GetTileChar(const std::shared_ptr<SeaMap> seaMap, const std::pair<int, int> position, const bool fogOfWar)
 {
-    const Tile& tile = seaMap.GetTileConst(position);
+    const Tile& tile = seaMap->GetTileConst(position);
 
-    if (!seaMap.scannedWithRadar)
+    if (!seaMap->scannedWithRadar)
         return GetTileChar(tile, fogOfWar);
     else if (!fogOfWar)
         return GetTileChar(tile, false);
 
-    return GetTileChar(tile, !seaMap.IsScanned(position));
+    return GetTileChar(tile, !seaMap->IsScanned(position));
 }
 
-void FrameRender::AddMapRow(const SeaMap& seaMap, const std::pair<int, int> actionPosition, const int y, const bool fogOfWar)
+void FrameRender::AddMapRow(const std::shared_ptr<SeaMap> seaMap, const std::pair<int, int> actionPosition, const int y, const bool fogOfWar)
 {
-    const int width = seaMap.size.first;
+    const int width = seaMap->size.first;
 
     for (int x = 0; x < width; x++)
     {
@@ -140,16 +139,16 @@ void FrameRender::AddChar(const char character)
     _text->Append(character);
 }
 
-void FrameRender::AddPlayersRadarScansLeftText(const Player& attackingPlayer)
+void FrameRender::AddPlayersRadarScansLeftText(const std::shared_ptr<Player> attackingPlayer)
 {
     AddText(PlayerRadarScansLeftText);
-    AddText(std::to_string(attackingPlayer.GetRadarsLeft()));
+    AddText(std::to_string(attackingPlayer->GetRadarsLeft()));
 }
 
-void FrameRender::AddPlayersMapsLines(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition)
+void FrameRender::AddPlayersMapsLines(const std::shared_ptr<Player> attackingPlayer, const std::shared_ptr<Player> attackedPlayer, const std::pair<int, int> actionPosition)
 {
-    const SeaMap& attackingPlayerMap = attackingPlayer.GetMap();
-    const SeaMap& attackedPlayerMap = attackedPlayer.GetMap();
+    const std::shared_ptr<SeaMap> attackingPlayerMap = attackingPlayer->GetMap();
+    const std::shared_ptr<SeaMap> attackedPlayerMap = attackedPlayer->GetMap();
 
     for (int y = 0; y < mapSize.second; y++)
     {

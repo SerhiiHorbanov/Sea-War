@@ -22,7 +22,7 @@ public:
     ShootingResult ShootAtPosition(const std::pair<int, int> position);
     void ScanAtPosition(const std::pair<int, int> position);
 
-    const SeaMap& GetMap() const;
+    const std::shared_ptr<SeaMap> GetMap() const;
 
     int GetRadarsLeft() const;
     bool IsBot() const;

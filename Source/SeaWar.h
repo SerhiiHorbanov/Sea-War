@@ -14,8 +14,8 @@ class SeaWar
 
     std::shared_ptr<Player> P1Map;
     std::shared_ptr<Player> P2Map;
-    Player* AttackingPlayer;
-    Player* AttackedPlayer;
+    std::shared_ptr<Player> AttackingPlayer;
+    std::shared_ptr<Player> AttackedPlayer;
 
     std::pair<int, int> actionPosition;
     TurnActionType actionType;

@@ -16,21 +16,21 @@ public:
         _areBothPlayersBots()
     {}
 
-    void Render(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition);
+    void Render(const std::shared_ptr<Player> attackingPlayer, const std::shared_ptr<Player> attackedPlayer, const std::pair<int, int> actionPosition);
     void Display() const;
 
 private:
-    void InitializeAreBothPlayersBots(const Player& attackingPlayer, const Player& attackedPlayer);
+    void InitializeAreBothPlayersBots(const std::shared_ptr<Player> attackingPlayer, const std::shared_ptr<Player> attackedPlayer);
 
     void ReserveMemory();
     int EvaluateImageLength() const;
 
     void AddPlayerTextsLine();
-    void AddPlayersMapsLines(const Player& attackingPlayer, const Player& attackedPlayer, const std::pair<int, int> actionPosition);
+    void AddPlayersMapsLines(const std::shared_ptr<Player> attackingPlayer, const std::shared_ptr<Player> attackedPlayer, const std::pair<int, int> actionPosition);
     void AddTipLine();
-    void AddPlayersRadarScansLeftText(const Player& attackingPlayer);
+    void AddPlayersRadarScansLeftText(const std::shared_ptr<Player> attackingPlayer);
 
-    void AddMapRow(const SeaMap& seaMap, const std::pair<int, int> actionPosition, const int y, const bool fogOfWar);
+    void AddMapRow(const std::shared_ptr<SeaMap> seaMap, const std::pair<int, int> actionPosition, const int y, const bool fogOfWar);
 
     void AddText(const ConsoleTextAttribute attribute, const std::string& text);
     void AddText(const std::string& text);

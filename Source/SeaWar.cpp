@@ -40,8 +40,8 @@ void SeaWar::InitializePlayers()
 
 void SeaWar::SetAttackingAndAttackedMaps()
 {
-    AttackingPlayer = P1Map.get();
-    AttackedPlayer = P2Map.get();
+    AttackingPlayer = P1Map;
+    AttackedPlayer = P2Map;
 }
 
 void SeaWar::Render() const
@@ -53,7 +53,7 @@ void SeaWar::Render() const
 FrameRender SeaWar::GenerateImage() const
 {
     FrameRender render = FrameRender();
-    render.Render(*AttackingPlayer, *AttackedPlayer, actionPosition);
+    render.Render(AttackingPlayer, AttackedPlayer, actionPosition);
     return render;
 }
 
@@ -101,7 +101,7 @@ void SeaWar::TryMoveActionPosition(const std::pair<int, int> delta)
 {
     const std::pair<int, int> newPosition = { delta.first + actionPosition.first, delta.second + actionPosition.second };
 
-    if (AttackedPlayer->GetMap().IsInBounds(newPosition))
+    if (AttackedPlayer->GetMap()->IsInBounds(newPosition))
         actionPosition = newPosition;
 }
 
@@ -119,7 +119,7 @@ void SeaWar::HandlePlayerActions()
 
     do
     {
-        const std::pair<int, int> botActionPosition = AttackedPlayer->GetMap().GetRandomNotShotTile();
+        const std::pair<int, int> botActionPosition = AttackedPlayer->GetMap()->GetRandomNotShotTile();
         PerformAction(TurnActionType::Shoot, botActionPosition);
     } while (AttackingPlayer->IsBot() && !AttackedPlayer->IsBot());
 }

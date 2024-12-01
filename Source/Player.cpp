@@ -34,9 +34,9 @@ bool Player::IsBot() const
     return _isBot;
 }
 
-const SeaMap& Player::GetMap() const
+const std::shared_ptr<SeaMap> Player::GetMap() const
 {
-    return *_map;
+    return _map;
 }
 
 bool Player::HasLost() const

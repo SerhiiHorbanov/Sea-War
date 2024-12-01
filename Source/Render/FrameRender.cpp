@@ -24,7 +24,7 @@ constexpr char FogOfWarChar = '#';
 void FrameRender::ReserveMemory()
 {
     const int lengthReserving = EvaluateImageLength();
-    _text->Reserve(lengthReserving);
+    _text.Reserve(lengthReserving);
 }
 
 int FrameRender::EvaluateImageLength() const
@@ -49,7 +49,7 @@ int FrameRender::EvaluateImageLength() const
 void FrameRender::Display() const
 {
     std::system("cls");
-    _text->Print();
+    _text.Print();
 
     if (_areBothPlayersBots)
         Sleep(SleepMilliseconds);
@@ -104,7 +104,7 @@ void FrameRender::AddMapRow(const std::shared_ptr<SeaMap> seaMap, const std::pai
 
         const char tileChar = GetTileChar(seaMap, position, fogOfWar);
         
-        _text->Append(attribute, tileChar);
+        _text.Append(attribute, tileChar);
     }
 }
 
@@ -121,22 +121,22 @@ void FrameRender::AddPlayerTextsLine()
 
 void FrameRender::AddText(const ConsoleTextAttribute attribute, const std::string& text)
 {
-    _text->Append(attribute, text);
+    _text.Append(attribute, text);
 }
 
 void FrameRender::AddText(const std::string& text)
 {
-    _text->Append(text);
+    _text.Append(text);
 }
 
 void FrameRender::AddChar(const ConsoleTextAttribute attribute, const char character)
 {
-    _text->Append(attribute, character);
+    _text.Append(attribute, character);
 }
 
 void FrameRender::AddChar(const char character)
 {
-    _text->Append(character);
+    _text.Append(character);
 }
 
 void FrameRender::AddPlayersRadarScansLeftText(const std::shared_ptr<Player> attackingPlayer)

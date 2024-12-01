@@ -4,15 +4,15 @@
 #include "MultiAttributedText.h"
 #include "../Player.h"
 
-struct FrameRender
+class FrameRender
 {
 private:
-    std::shared_ptr<MultiAttributedText> _text;
+    MultiAttributedText _text;
     bool _areBothPlayersBots;
 
 public:
     FrameRender() :
-        _text(std::shared_ptr<MultiAttributedText>(new MultiAttributedText())),        
+        _text(MultiAttributedText()),        
         _areBothPlayersBots()
     {}
 

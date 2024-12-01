@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-class MultiAttributedText
+struct MultiAttributedText
 {
 private:
 	struct AttributeStartIndexPair

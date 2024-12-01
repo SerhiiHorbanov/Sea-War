@@ -12,14 +12,14 @@ const ConsoleTextAttribute MapTextAttribute = ConsoleTextAttribute();
 const ConsoleTextAttribute PointedAtTileAttribute = ConsoleTextAttribute(ConsoleColor::Black, ConsoleColor::Red);//, false, false, false, false, true);
 const ConsoleTextAttribute TipTextAttribute = ConsoleTextAttribute(ConsoleColor::LightGreen);
 
-const int SleepMilliseconds = 1000;
+constexpr int SleepMilliseconds = 1000;
 
-const std::pair<char, char> tileTextures[] =
+constexpr std::pair<char, char> TileTextures[] =
 {
     {'~', '-'},// TileType::Sea
     {'W', 'x'},// TileType::Warship
 };
-const char fogOfWarChar = '#';
+constexpr char FogOfWarChar = '#';
 
 void FrameRender::ReserveMemory()
 {
@@ -73,9 +73,9 @@ void FrameRender::InitializeAreBothPlayersBots(const std::shared_ptr<Player> att
 char GetTileChar(const Tile& tile, const bool fogOfWar)
 {
     if (fogOfWar && !tile.WasShot)
-        return fogOfWarChar;
+        return FogOfWarChar;
 
-    const std::pair<char, char> currentTilePossibleTextures = tileTextures[(int)tile.Type];
+    const std::pair<char, char> currentTilePossibleTextures = TileTextures[(int)tile.Type];
 
     return tile.WasShot ? currentTilePossibleTextures.second : currentTilePossibleTextures.first;
 }

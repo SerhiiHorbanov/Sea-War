@@ -352,6 +352,7 @@
       <SDLCheck>true</SDLCheck>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Source\Render\RenderText.cpp" />
     <ClCompile Include="Source\SeaMap.cpp" />
     <ClCompile Include="Source\SeaWar.cpp" />
     <ClCompile Include="Source\Tile.cpp" />
@@ -362,6 +363,7 @@
     <ClInclude Include="Source\Render\FrameRender.h" />
     <ClInclude Include="Source\Render\IRenderObject.h" />
     <ClInclude Include="Source\Render\MultiAttributedText.h" />
+    <ClInclude Include="Source\Render\RenderText.h" />
     <ClInclude Include="Source\SeaMap.h" />
     <ClInclude Include="Source\SeaWar.h" />
     <ClInclude Include="Source\Tile.h" />

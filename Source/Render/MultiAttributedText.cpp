@@ -1,4 +1,5 @@
 #include "MultiAttributedText.h"
+#include <iostream>
 
 void MultiAttributedText::Print() const
 {
@@ -49,10 +50,20 @@ void MultiAttributedText::Reserve(const size_t size)
 	_text.reserve(size);
 }
 
+void MultiAttributedText::Join(const MultiAttributedText& other)
+{
+	_text += other._text;
+	
+	const std::vector<AttributeStartIndexPair>& otherAttributes = other._attributes;
+	
+	_attributes.reserve(_attributes.size() + otherAttributes.size());
+	_attributes.insert(_attributes.end(), otherAttributes.begin(), otherAttributes.end());
+}
+
 void MultiAttributedText::TryAddAttributeAtEnd(const ConsoleTextAttribute attribute)
 {
 	const int attributesAmount = _attributes.size();
-	if (_attributes.size() == 0)
+	if (attributesAmount)
 	{
 		_attributes.emplace_back(attribute, 0);
 		return;

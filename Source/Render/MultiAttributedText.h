@@ -4,8 +4,6 @@
 #include <vector>
 #include "ConsoleTextAttribute.h"
 
-#include <iostream>
-
 struct MultiAttributedText
 {
 private:
@@ -19,6 +17,13 @@ private:
 	std::string _text;
 
 public:
+	MultiAttributedText() = default;
+
+	MultiAttributedText(const ConsoleTextAttribute attribute, const std::string& text) : 
+		_attributes({AttributeStartIndexPair(attribute)}),
+		_text(text)
+	{}
+	
 	void Print() const;
 
 	void SetAttributeForCharacter(const int index, const ConsoleTextAttribute attribute);
@@ -32,6 +37,7 @@ public:
 
 	void Reserve(const size_t size);
 
+	void Join(const MultiAttributedText& other);
 private:
 	int GetAttributeStartIndexPairForTextIndex(const int index) const;
 

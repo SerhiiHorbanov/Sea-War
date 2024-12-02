@@ -360,6 +360,7 @@
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Render\ConsoleTextAttribute.h" />
     <ClInclude Include="Source\Render\FrameRender.h" />
+    <ClInclude Include="Source\Render\IRenderObject.h" />
     <ClInclude Include="Source\Render\MultiAttributedText.h" />
     <ClInclude Include="Source\SeaMap.h" />
     <ClInclude Include="Source\SeaWar.h" />

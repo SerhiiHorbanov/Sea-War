@@ -1,7 +1,7 @@
 #pragma once
 #include "MultiAttributedText.h"
 
-struct IRenderObject
+class IRenderObject
 {
 public:
     virtual ~IRenderObject() = default;

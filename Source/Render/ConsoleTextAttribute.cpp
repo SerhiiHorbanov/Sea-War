@@ -1,4 +1,6 @@
-#include "ConsoleTextAttribute.h"     
+#include "ConsoleTextAttribute.h"
+#include <Windows.h>
+
 constexpr uint32_t DefaultAttribute = (uint32_t)ConsoleColor::LightGray;
 
 constexpr uint32_t BackGroundColorShift = 4;
@@ -22,12 +24,12 @@ constexpr uint32_t InvertedInvertColorsMask = ~InvertColorsMask;        //0b1111
 
 static HANDLE handle;
 
-void ConsoleTextAttribute::InitializeSTDHandle()
+void ConsoleTextAttribute::InitializeStdHandle()
 {
     handle = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
-void ConsoleTextAttribute::SetForeGroundColor(ConsoleColor color)
+void ConsoleTextAttribute::SetForeGroundColor(const ConsoleColor color)
 {
     _textAttribute &= InvertedForeGroundColorMask;
     _textAttribute += (uint32_t)color;
@@ -38,10 +40,10 @@ ConsoleColor ConsoleTextAttribute::GetForeGroundColor() const
     return (ConsoleColor)(_textAttribute & ForeGroundColorMask);
 }
 
-void ConsoleTextAttribute::SetBackGroundColor(ConsoleColor color)
+void ConsoleTextAttribute::SetBackGroundColor(const ConsoleColor color)
 {
     _textAttribute &= InvertedBackGroundColorMask;
-    _textAttribute += (uint32_t)color << 4;
+    _textAttribute += (uint32_t)color << BackGroundColorShift;
 }
 
 ConsoleColor ConsoleTextAttribute::GetBackGroundColor() const
@@ -49,7 +51,7 @@ ConsoleColor ConsoleTextAttribute::GetBackGroundColor() const
     return (ConsoleColor)(_textAttribute & BackGroundColorMask);
 }
 
-void ConsoleTextAttribute::SetTopEdge(bool enabled)
+void ConsoleTextAttribute::SetTopEdge(const bool enabled)
 {
     _textAttribute &= InvertedTopEdgeMask;
     _textAttribute += TopEdgeMask * enabled;
@@ -60,7 +62,7 @@ bool ConsoleTextAttribute::GetTopEdge() const
     return _textAttribute & TopEdgeMask;
 }
 
-void ConsoleTextAttribute::SetBottomEdge(bool enabled)
+void ConsoleTextAttribute::SetBottomEdge(const bool enabled)
 {
     _textAttribute &= InvertedBottomEdgeMask;
     _textAttribute += BottomEdgeMask * enabled;
@@ -71,10 +73,10 @@ bool ConsoleTextAttribute::GetBottomEdge() const
     return (_textAttribute & BottomEdgeMask) != 0;
 }
 
-void ConsoleTextAttribute::SetRightEdge(bool enabled)
+void ConsoleTextAttribute::SetRightEdge(const bool enabled)
 {
-    _textAttribute &= InvertedTopEdgeMask;
-    _textAttribute += TopEdgeMask * enabled;
+    _textAttribute &= InvertedRightEdgeMask;
+    _textAttribute += RightEdgeMask * enabled;
 }
 
 bool ConsoleTextAttribute::GetRightEdge() const
@@ -82,7 +84,7 @@ bool ConsoleTextAttribute::GetRightEdge() const
     return _textAttribute & RightEdgeMask;
 }
 
-void ConsoleTextAttribute::SetLeftEdge(bool enabled)
+void ConsoleTextAttribute::SetLeftEdge(const bool enabled)
 {
     _textAttribute &= InvertedLeftEdgeMask;
     _textAttribute += LeftEdgeMask * enabled;
@@ -93,7 +95,7 @@ bool ConsoleTextAttribute::GetLeftEdge() const
     return _textAttribute & LeftEdgeMask;
 }
 
-void ConsoleTextAttribute::SetInvertColors(bool enabled)
+void ConsoleTextAttribute::SetInvertColors(const bool enabled)
 {
     _textAttribute &= InvertedInvertColorsMask;
     _textAttribute += InvertColorsMask * enabled;
@@ -119,7 +121,7 @@ void ConsoleTextAttribute::Apply() const
     SetConsoleTextAttribute(handle, _textAttribute);
 }
 
-bool operator==(ConsoleTextAttribute left, ConsoleTextAttribute right)
+bool operator==(const ConsoleTextAttribute left, const ConsoleTextAttribute right)
 {
     return left.GetAsUint32() == right.GetAsUint32();
 }

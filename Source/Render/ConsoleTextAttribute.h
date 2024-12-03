@@ -1,5 +1,4 @@
 #pragma once
-#include <Windows.h>
 #include <inttypes.h>
 
 enum class ConsoleColor : char
@@ -27,9 +26,9 @@ struct ConsoleTextAttribute
 public:
     ConsoleTextAttribute
     (
-        ConsoleColor foreGroundColor = ConsoleColor::LightGray, ConsoleColor backGroundColor = ConsoleColor::Black,
-        bool topEdge = false, bool bottomEdge = false, bool rightEdge = false, bool leftEdge = false,
-        bool invertColors = false
+        const ConsoleColor foreGroundColor = ConsoleColor::LightGray, const ConsoleColor backGroundColor = ConsoleColor::Black,
+        const bool topEdge = false, const bool bottomEdge = false, const bool rightEdge = false, const bool leftEdge = false,
+        const bool invertColors = false
     )
     {
         SetForeGroundColor(foreGroundColor);
@@ -44,23 +43,23 @@ public:
     }
 
     // this function NEEDS to be called at least once before applying ConsoleTextAttribute
-    static void InitializeSTDHandle();
+    static void InitializeStdHandle();
 
-    void SetForeGroundColor(ConsoleColor color);
+    void SetForeGroundColor(const ConsoleColor color);
     ConsoleColor GetForeGroundColor() const;
-    void SetBackGroundColor(ConsoleColor color);
+    void SetBackGroundColor(const ConsoleColor color);
     ConsoleColor GetBackGroundColor() const;
 
-    void SetTopEdge(bool enabled);
+    void SetTopEdge(const bool enabled);
     bool GetTopEdge() const;
-    void SetBottomEdge(bool enabled);
+    void SetBottomEdge(const bool enabled);
     bool GetBottomEdge() const;
-    void SetRightEdge(bool enabled);
+    void SetRightEdge(const bool enabled);
     bool GetRightEdge() const;
-    void SetLeftEdge(bool enabled);
+    void SetLeftEdge(const bool enabled);
     bool GetLeftEdge() const;
 
-    void SetInvertColors(bool enabled);
+    void SetInvertColors(const bool enabled);
     bool GetInvertColors() const;
 
     void Reset();

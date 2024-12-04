@@ -63,7 +63,7 @@ void MultiAttributedText::Join(const MultiAttributedText& other)
 void MultiAttributedText::TryAddAttributeAtEnd(const ConsoleTextAttribute attribute)
 {
 	const int attributesAmount = _attributes.size();
-	if (attributesAmount)
+	if (!attributesAmount)
 	{
 		_attributes.emplace_back(attribute, 0);
 		return;

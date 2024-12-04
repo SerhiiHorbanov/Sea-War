@@ -17,8 +17,11 @@ private:
 	std::string _text;
 
 public:
-	MultiAttributedText() = default;
-
+	MultiAttributedText() : 
+		_attributes(std::vector<AttributeStartIndexPair>()),
+		_text()
+	{}
+	
 	MultiAttributedText(const ConsoleTextAttribute attribute, const std::string& text) : 
 		_attributes({AttributeStartIndexPair(attribute)}),
 		_text(text)

@@ -12,15 +12,16 @@ class SeaWar
         RadarScan,
     };
 
-    std::shared_ptr<Player> P1Map;
-    std::shared_ptr<Player> P2Map;
-    std::shared_ptr<Player> AttackingPlayer;
-    std::shared_ptr<Player> AttackedPlayer;
+    std::shared_ptr<Player> _firstPlayer;
+    std::shared_ptr<Player> _secondPlayer;
+    std::shared_ptr<Player> _actingPlayer;
+    std::shared_ptr<Player> _inactivePlayer;
 
-    std::pair<int, int> actionPosition;
-    TurnActionType actionType;
+    std::pair<int, int> _mapCursorPosition;
+    TurnActionType _actionType;
 
 public:
+    SeaWar() = default;
     void Run();
 
 private:

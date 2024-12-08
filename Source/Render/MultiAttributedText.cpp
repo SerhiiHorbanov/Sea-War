@@ -45,12 +45,7 @@ void MultiAttributedText::Append(const char character)
 	_text += character;
 }
 
-void MultiAttributedText::Reserve(const size_t size)
-{
-	_text.reserve(size);
-}
-
-void MultiAttributedText::Join(const MultiAttributedText& other)
+void MultiAttributedText::Append(const MultiAttributedText& other)
 {
 	_text += other._text;
 	
@@ -58,6 +53,11 @@ void MultiAttributedText::Join(const MultiAttributedText& other)
 	
 	_attributes.reserve(_attributes.size() + otherAttributes.size());
 	_attributes.insert(_attributes.end(), otherAttributes.begin(), otherAttributes.end());
+}
+
+void MultiAttributedText::Reserve(const size_t size)
+{
+	_text.reserve(size);
 }
 
 void MultiAttributedText::TryAddAttributeAtEnd(const ConsoleTextAttribute attribute)

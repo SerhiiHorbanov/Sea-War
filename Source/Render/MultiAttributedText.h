@@ -37,10 +37,10 @@ public:
 	void Append(const ConsoleTextAttribute attribute, const std::string& text);
 	void Append(const std::string& text);
 	void Append(const char character);
+	void Append(const MultiAttributedText& other);
 
 	void Reserve(const size_t size);
-
-	void Join(const MultiAttributedText& other);
+	
 private:
 	int GetAttributeStartIndexPairForTextIndex(const int index) const;
 

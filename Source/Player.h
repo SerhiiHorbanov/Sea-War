@@ -21,7 +21,7 @@ public:
     static std::shared_ptr<Player> CreateNewPlayer(const bool isBot);
 
     bool TryConsumeRadarScan();
-    void Win();
+    void WinRound();
     
     ShootingResult ShootAtPosition(const std::pair<int, int> position) const;
     void ScanAtPosition(const std::pair<int, int> position) const;
@@ -32,6 +32,7 @@ public:
     int GetRadarsLeft() const;
     int GetWins() const;
     bool IsBot() const;
-    bool HasLost() const;
+    bool HasLostRound() const;
+    bool HasWonGame() const;
 };
 

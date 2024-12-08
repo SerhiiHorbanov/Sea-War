@@ -33,10 +33,9 @@ private:
     void Input();
     void Update();
 
-    void SetRandomSeed();
+    static void SetRandomSeed();
     void InitializePlayers();
-    void SetAttackingAndAttackedMaps();
-
+    
     FrameRender GenerateImage() const;
 
     char EnterInput() const;
@@ -44,16 +43,15 @@ private:
     void TryMoveActionPosition(const std::pair<int, int> delta);
 
     void HandlePlayerActions();
-    void ReGeneratePlayerMaps() const;
-    void CheckPlayerWon(std::shared_ptr<Player> winner, std::shared_ptr<Player> loser) const;
-    void CheckForWinner() const;
+    void RegeneratePlayerMaps() const;
+    void CheckAndHandleWin(std::shared_ptr<Player> winner, std::shared_ptr<Player> loser) const;
 
     void PerformAction(const TurnActionType type, const std::pair<int, int> position);
 
     void Scan(const std::pair<int, int> position) const; 
     void Shoot(const std::pair<int, int> position);
     
-    void SwapAttackingPlayer();
+    void SwapActingPlayer();
 
     bool AreBothPlayersBots() const;
 };

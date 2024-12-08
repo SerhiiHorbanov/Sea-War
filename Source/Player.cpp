@@ -1,6 +1,7 @@
 #include "Player.h"
 
 constexpr int DefaultRadarScansAmount = 5;
+constexpr int RoundWinsRequiredForGameWin = 3;
 
 std::shared_ptr<Player> Player::CreateNewPlayer(const bool isBot)
 {
@@ -16,7 +17,7 @@ bool Player::TryConsumeRadarScan()
     return result;
 }
 
-void Player::Win()
+void Player::WinRound()
 {
     _wins++;
 }
@@ -56,7 +57,12 @@ const std::shared_ptr<SeaMap> Player::GetMap() const
     return _map;
 }
 
-bool Player::HasLost() const
+bool Player::HasLostRound() const
 {
     return !_map->AnyShipsLeft;
+}
+
+bool Player::HasWonGame() const
+{
+    return GetWins() > RoundWinsRequiredForGameWin;
 }

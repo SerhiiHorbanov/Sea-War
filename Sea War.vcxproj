@@ -354,6 +354,7 @@
     </ClCompile>
     <ClCompile Include="Source\Render\RenderOfSeaMap.cpp" />
     <ClCompile Include="Source\Render\RenderOfText.cpp" />
+    <ClCompile Include="Source\Render\RenderOfInt.cpp" />
     <ClCompile Include="Source\SeaMap.cpp" />
     <ClCompile Include="Source\SeaWar.cpp" />
     <ClCompile Include="Source\Tile.cpp" />
@@ -366,6 +367,7 @@
     <ClInclude Include="Source\Render\MultiAttributedText.h" />
     <ClInclude Include="Source\Render\RenderOfSeaMap.h" />
     <ClInclude Include="Source\Render\RenderOfText.h" />
+    <ClInclude Include="Source\Render\RenderOfInt.h" />
     <ClInclude Include="Source\SeaMap.h" />
     <ClInclude Include="Source\SeaWar.h" />
     <ClInclude Include="Source\Tile.h" />

@@ -1,6 +1,14 @@
 #include "SeaWar.h"
 #include <conio.h>
 #include "Render/FrameRender.h"
+#include "Render/RenderOfInt.h"
+#include "Render/RenderOfSeaMap.h"
+#include "Render/RenderOfText.h"
+
+const std::string TipText = "press W/A/S/D to move. press E to shoot. press R to scan with radar\n";
+const std::string PlayerRadarScansLeftText = "radar scans left:";
+
+const ConsoleTextAttribute TipTextAttribute = ConsoleTextAttribute(ConsoleColor::LightGreen);
 
 constexpr char DefaultInput = ' ';
 
@@ -54,7 +62,13 @@ void SeaWar::Render() const
 FrameRender SeaWar::GenerateImage() const
 {
     FrameRender render = FrameRender();
-    render.Render(_actingPlayer, _inactivePlayer, _mapCursorPosition);
+    
+    render.AddRenderObject<RenderOfSeaMap>(_inactivePlayer->GetMap(), true, _mapCursorPosition);
+    render.AddRenderObject<RenderOfText>(TipText, TipTextAttribute);
+    render.AddRenderObject<RenderOfText>(PlayerRadarScansLeftText, TipTextAttribute);
+    render.AddRenderObject<RenderOfInt>(_actingPlayer->GetRadarsLeft(), TipTextAttribute);
+    render.Render();
+    
     return render;
 }
 

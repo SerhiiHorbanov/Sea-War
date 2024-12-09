@@ -1,11 +1,11 @@
 #include "RenderOfText.h"
 
-int RenderOfText::EvaluateLength()
+int RenderOfText::EvaluateLength() const
 {
     return _text.length();
 }
 
-MultiAttributedText RenderOfText::GetAttributedText()
+MultiAttributedText RenderOfText::RenderText() const
 {
     return {_attribute, _text};
 }

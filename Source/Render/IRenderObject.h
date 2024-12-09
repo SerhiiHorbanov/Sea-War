@@ -6,6 +6,6 @@ class IRenderObject
 public:
     virtual ~IRenderObject() = default;
 
-    virtual int EvaluateLength() = 0;
-    [[nodiscard]] virtual MultiAttributedText GetAttributedText() = 0;
+    virtual int EvaluateLength() const = 0;
+    [[nodiscard]] virtual MultiAttributedText RenderText() const = 0;
 };

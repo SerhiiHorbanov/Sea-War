@@ -12,7 +12,7 @@ class RenderOfText final : public IRenderObject
         _attribute(attribute)
     {}
 
-    int EvaluateLength() override;
+    int EvaluateLength() const override;
 
-    MultiAttributedText GetAttributedText() override;
+    MultiAttributedText RenderText() const override;
 };

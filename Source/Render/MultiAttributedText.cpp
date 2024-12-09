@@ -9,18 +9,11 @@ void MultiAttributedText::Print() const
 
 void MultiAttributedText::SetAttributeForCharacter(const int index, const ConsoleTextAttribute attribute)
 {
-	if (index == _text.size() - 1)
-		_attributes.emplace_back(attribute, index);
-
-	const int characterInPairIndex = GetAttributeStartIndexPairForTextIndex(index);
-
-	if (_attributes[characterInPairIndex].Attribute == attribute)
-		return;
-
-	auto iterator = _attributes.begin() + characterInPairIndex;
-
-	_attributes.insert(iterator, AttributeStartIndexPair(attribute, index));
-	_attributes.emplace(iterator, _attributes[characterInPairIndex]);
+	const int characterInPairIndex = GetAttributeStartPairIndexForCharacter(index + 1);
+	ConsoleTextAttribute succedingAttribute = GetAttributeOfSegment(characterInPairIndex);
+	
+	TryInsertAttribute(attribute, index);
+	TryInsertAttribute(succedingAttribute, index + 1);
 }
 
 void MultiAttributedText::Append(const ConsoleTextAttribute attribute, const std::string& text)
@@ -47,12 +40,14 @@ void MultiAttributedText::Append(const char character)
 
 void MultiAttributedText::Append(const MultiAttributedText& other)
 {
+	const int previousTextLength = _text.size();
 	_text += other._text;
 	
 	const std::vector<AttributeStartIndexPair>& otherAttributes = other._attributes;
 	
 	_attributes.reserve(_attributes.size() + otherAttributes.size());
-	_attributes.insert(_attributes.end(), otherAttributes.begin(), otherAttributes.end());
+	for (auto each : otherAttributes)
+		TryInsertAttribute(each.Attribute, each.StartIndex + previousTextLength);
 }
 
 void MultiAttributedText::Reserve(const size_t size)
@@ -77,14 +72,31 @@ void MultiAttributedText::TryAddAttributeAtEnd(const ConsoleTextAttribute attrib
 	_attributes.emplace_back(attribute, _text.size());
 }
 
-int MultiAttributedText::GetAttributeStartIndexPairForTextIndex(const int index) const
+void MultiAttributedText::TryInsertAttribute(const ConsoleTextAttribute attribute, const int startIndex)
 {
-	const int attributesAmount = _attributes.size();
+	AttributeStartIndexPair attributeStartIndexPair = AttributeStartIndexPair(attribute, startIndex);
+	
+	int previousAttributeIndex = GetAttributeStartPairIndexForCharacter(startIndex);
+	
+	if (GetAttributeOfSegment(previousAttributeIndex) == attribute)
+		return;
 
-	for (int i = 1; i < attributesAmount; i++)
+	if (GetStartIndexOfSegment(previousAttributeIndex) == startIndex)
 	{
-		if (GetStartIndexOfSegment(i) >= index)
-			return i - 1;
+		_attributes[previousAttributeIndex] = attributeStartIndexPair;
+		return;
+	}
+
+	auto iterator = _attributes.begin() + previousAttributeIndex + 1;
+	_attributes.insert(iterator, attributeStartIndexPair);
+}
+
+int MultiAttributedText::GetAttributeStartPairIndexForCharacter(const int charIndex) const
+{
+	for (int i = _attributes.size() - 1; i > 0; i--)
+	{
+		if (GetStartIndexOfSegment(i) <= charIndex)
+			return i;
 	}
 	return 0;
 }

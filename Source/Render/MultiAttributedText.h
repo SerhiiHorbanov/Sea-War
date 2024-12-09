@@ -18,8 +18,7 @@ private:
 
 public:
 	MultiAttributedText() : 
-		_attributes(std::vector<AttributeStartIndexPair>()),
-		_text()
+		_attributes({AttributeStartIndexPair()})
 	{}
 	
 	MultiAttributedText(const ConsoleTextAttribute attribute, const std::string& text) : 
@@ -32,7 +31,8 @@ public:
 	void SetAttributeForCharacter(const int index, const ConsoleTextAttribute attribute);
 
 	void TryAddAttributeAtEnd(const ConsoleTextAttribute attribute);
-
+	void TryInsertAttribute(const ConsoleTextAttribute attribute, const int startIndex);
+	
 	void Append(const ConsoleTextAttribute attribute, const char character);
 	void Append(const ConsoleTextAttribute attribute, const std::string& text);
 	void Append(const std::string& text);
@@ -42,7 +42,7 @@ public:
 	void Reserve(const size_t size);
 	
 private:
-	int GetAttributeStartIndexPairForTextIndex(const int index) const;
+	int GetAttributeStartPairIndexForCharacter(const int charIndex) const;
 
 	void PrintSegment(const int index) const;
 

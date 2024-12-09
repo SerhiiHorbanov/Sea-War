@@ -1,39 +1,34 @@
 #pragma once
-#include <string>
 #include <memory>
 #include "MultiAttributedText.h"
-#include "../Player.h"
+#include "IRenderObject.h"
 
 class FrameRender
 {
 private:
+    using SharedRenderObject = std::shared_ptr<const IRenderObject>;
+    std::vector<SharedRenderObject> _renderObjects;
     MultiAttributedText _text;
-    bool _areBothPlayersBots;
-
+    
 public:
-    FrameRender() :
-        _text(MultiAttributedText()),        
-        _areBothPlayersBots()
-    {}
+    FrameRender() = default;
 
-    void Render(const std::shared_ptr<Player> attackingPlayer, const std::shared_ptr<Player> attackedPlayer, const std::pair<int, int> actionPosition);
+    template <typename RenderObjectImpl, typename... ConstructorArguments>
+    std::enable_if_t<std::is_base_of_v<IRenderObject, RenderObjectImpl>>
+    AddRenderObject(ConstructorArguments... arguments);
+    void Render();
     void Display() const;
 
 private:
-    void InitializeAreBothPlayersBots(const std::shared_ptr<Player> attackingPlayer, const std::shared_ptr<Player> attackedPlayer);
-
     void ReserveMemory();
-    int EvaluateImageLength() const;
-
-    void AddPlayerTextsLine();
-    void AddPlayersMapsLines(const std::shared_ptr<Player> attackingPlayer, const std::shared_ptr<Player> attackedPlayer, const std::pair<int, int> actionPosition);
-    void AddTipLine();
-    void AddPlayersRadarScansLeftText(const std::shared_ptr<Player> attackingPlayer);
-
-    void AddMapRow(const std::shared_ptr<SeaMap> seaMap, const std::pair<int, int> actionPosition, const int y, const bool fogOfWar);
-
-    void AddText(const ConsoleTextAttribute attribute, const std::string& text);
-    void AddText(const std::string& text);
-    void AddChar(const ConsoleTextAttribute attribute, const char character);
-    void AddChar(const char character);
+    int EvaluateImageLength();
 };
+
+template <typename RenderObjectImpl, typename... ConstructorArguments>
+std::enable_if_t<std::is_base_of_v<IRenderObject, RenderObjectImpl>>
+FrameRender::AddRenderObject(ConstructorArguments... arguments)
+{
+    IRenderObject* rawPointer = (IRenderObject*)new RenderObjectImpl(arguments...);
+    std::shared_ptr<IRenderObject> sharedPointer = std::shared_ptr<IRenderObject>(rawPointer);
+    _renderObjects.push_back(sharedPointer);
+}

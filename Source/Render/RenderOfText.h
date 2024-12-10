@@ -13,6 +13,10 @@ public:
         _text(text),
         _attribute(attribute)
     {}
+    
+    RenderOfText(const std::string& text) :
+        _text(text)
+    {}
 
     int EvaluateLength() const override;
 

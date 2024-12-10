@@ -46,8 +46,9 @@ private:
     void RegeneratePlayerMaps() const;
     void CheckAndHandleWin(std::shared_ptr<Player> winner, std::shared_ptr<Player> loser) const;
 
+    void PerformBotAction();
     void PerformAction(const TurnActionType type, const std::pair<int, int> position);
-
+    
     void Scan(const std::pair<int, int> position) const; 
     void Shoot(const std::pair<int, int> position);
     

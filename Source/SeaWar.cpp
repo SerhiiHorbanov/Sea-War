@@ -31,8 +31,8 @@ void SeaWar::Initialization()
 
 bool SeaWar::GameContinues() const
 {
-    bool firstPlayerWonGame = _firstPlayer->HasWonGame();
-    bool secondPlayerWonGame = _secondPlayer->HasWonGame();
+    const bool firstPlayerWonGame = _firstPlayer->HasWonGame();
+    const bool secondPlayerWonGame = _secondPlayer->HasWonGame();
     
     return  !firstPlayerWonGame && !secondPlayerWonGame;
 }

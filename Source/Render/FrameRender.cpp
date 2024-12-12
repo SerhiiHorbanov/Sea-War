@@ -1,5 +1,4 @@
 #include "FrameRender.h"
-#include <Windows.h>
 
 void FrameRender::Render()
 {
@@ -22,11 +21,11 @@ void FrameRender::ReserveMemory()
     _text.Reserve(evaluatedLength);
 }
 
-int FrameRender::EvaluateImageLength()
+int FrameRender::EvaluateImageLength() const
 {
     int lengthsSum = 0;
     
-    for (std::shared_ptr<const IRenderObject> each : _renderObjects)
+    for (const std::shared_ptr each : _renderObjects)
         lengthsSum += each->EvaluateLength();
 
     return lengthsSum;

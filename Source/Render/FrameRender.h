@@ -21,7 +21,7 @@ public:
 
 private:
     void ReserveMemory();
-    int EvaluateImageLength();
+    int EvaluateImageLength() const;
 };
 
 template <typename RenderObjectImpl, typename... ConstructorArguments>

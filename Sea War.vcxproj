@@ -129,6 +129,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\GameState.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Render\ConsoleTextAttribute.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -360,6 +362,8 @@
     <ClCompile Include="Source\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Game.h" />
+    <ClInclude Include="Source\GameState.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Render\ConsoleTextAttribute.h" />
     <ClInclude Include="Source\Render\FrameRender.h" />

@@ -1,10 +1,12 @@
  #pragma once
-#include <string>
+#include "GameState.h"
 #include "Render/FrameRender.h"
 #include "Player.h"
 
-class SeaWar
+class SeaWar : GameState
 {
+
+private:
     enum class TurnActionType
     {
         None,
@@ -14,26 +16,24 @@ class SeaWar
 
     std::shared_ptr<Player> _firstPlayer;
     std::shared_ptr<Player> _secondPlayer;
-    std::shared_ptr<Player> _actingPlayer;
-    std::shared_ptr<Player> _inactivePlayer;
+
+    bool isFirstPlayersTurn;
 
     std::pair<int, int> _mapCursorPosition;
     TurnActionType _actionType;
 
 public:
     SeaWar() = default;
-    void Run();
 
-private:
-    void Initialization();
+    void Initialization() override;
+    
+    bool GameContinues() const override;
+    
+    void Render() override;
+    void Input() override;
+    void Update(Game* handler) override;
 
-    bool GameContinues() const;
-
-    void Render() const;
-    void Input();
-    void Update();
-
-    static void SetRandomSeed();
+    void SetRandomSeed();
     void InitializePlayers();
     
     FrameRender GenerateImage() const;
@@ -55,4 +55,6 @@ private:
     void SwapActingPlayer();
 
     bool AreBothPlayersBots() const;
+    std::shared_ptr<Player> GetActingPlayer() const;
+    std::shared_ptr<Player> GetWaitingPlayer() const;
 };

@@ -1,9 +1,9 @@
 #include <memory>
-#include "Source/SeaWar.h"
+#include "Source/Game.h"
 
 int main()
 {
-    std::unique_ptr<SeaWar> game = std::unique_ptr<SeaWar>(new SeaWar());
+    std::unique_ptr<Game> game = std::unique_ptr<Game>(new Game());
     game->Run();
 
     return 0;

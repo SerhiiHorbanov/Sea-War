@@ -10,18 +10,6 @@ const std::string PlayerRadarScansLeftText = "radar scans left:";
 
 const ConsoleTextAttribute TipTextAttribute = ConsoleTextAttribute(ConsoleColor::LightGreen);
 
-void SeaWar::Run()
-{
-    Initialization();
-
-    while (GameContinues())
-    {
-        Render();
-        Input();
-        Update();
-    }
-}
-
 void SeaWar::Initialization()
 {
     SetRandomSeed();
@@ -37,6 +25,19 @@ bool SeaWar::GameContinues() const
     return  !firstPlayerWonGame && !secondPlayerWonGame;
 }
 
+void SeaWar::Render()
+{
+    const FrameRender render = GenerateImage();
+    render.Display();
+    
+}
+
+void SeaWar::Update(Game* handler)
+{
+    HandlePlayerActions();
+    CheckAndHandleWin(GetActingPlayer(), GetWaitingPlayer());
+}
+
 void SeaWar::SetRandomSeed()
 {
     std::srand(time(NULL));
@@ -46,32 +47,28 @@ void SeaWar::InitializePlayers()
 {
     _firstPlayer = Player::CreateNewPlayer(false);
     _secondPlayer = Player::CreateNewPlayer(false);
-    
-    _actingPlayer = _firstPlayer;
-    _inactivePlayer = _secondPlayer;
-}
 
-void SeaWar::Render() const
-{
-    const FrameRender render = GenerateImage();
-    render.Display();
+    isFirstPlayersTurn = true;
 }
 
 FrameRender SeaWar::GenerateImage() const
 {
     FrameRender render = FrameRender();
 
-    if (_inactivePlayer->IsBot())
+    const std::shared_ptr<Player> actingPlayer = GetActingPlayer();
+    const std::shared_ptr<Player> waitingPlayer = GetWaitingPlayer();
+    
+    if (waitingPlayer->IsBot())
     {
-        render.AddRenderObject<RenderOfSeaMap>(_actingPlayer->GetMap(), false, std::pair(-1, -1));
+        render.AddRenderObject<RenderOfSeaMap>(actingPlayer->GetMap(), false, std::pair(-1, -1));
         render.AddRenderObject<RenderOfText>("\n");
     }
 
     const bool useFogOfWarOnMapOfInactivePlayer = !AreBothPlayersBots();
-    render.AddRenderObject<RenderOfSeaMap>(_inactivePlayer->GetMap(), useFogOfWarOnMapOfInactivePlayer, _mapCursorPosition);
+    render.AddRenderObject<RenderOfSeaMap>(waitingPlayer->GetMap(), useFogOfWarOnMapOfInactivePlayer, _mapCursorPosition);
     render.AddRenderObject<RenderOfText>(TipText, TipTextAttribute);
     render.AddRenderObject<RenderOfText>(PlayerRadarScansLeftText, TipTextAttribute);
-    render.AddRenderObject<RenderOfInt>(_actingPlayer->GetRadarsLeft(), TipTextAttribute);
+    render.AddRenderObject<RenderOfInt>(actingPlayer->GetRadarsLeft(), TipTextAttribute);
     render.Render();
     
     return render;
@@ -119,19 +116,15 @@ void SeaWar::TryMoveActionPosition(const std::pair<int, int> delta)
 {
     const std::pair newPosition = { delta.first + _mapCursorPosition.first, delta.second + _mapCursorPosition.second };
 
-    if (_inactivePlayer->GetMap()->IsInBounds(newPosition))
+    const std::shared_ptr<SeaMap> waitingPlayersMap = GetWaitingPlayer()->GetMap();
+    
+    if (waitingPlayersMap->IsInBounds(newPosition))
         _mapCursorPosition = newPosition;
-}
-
-void SeaWar::Update()
-{
-    HandlePlayerActions();
-    CheckAndHandleWin(_actingPlayer, _inactivePlayer);
 }
 
 void SeaWar::HandlePlayerActions()
 {
-    if (_actingPlayer->IsBot())
+    if (GetActingPlayer()->IsBot())
     {
         PerformBotAction();
         return;
@@ -139,7 +132,7 @@ void SeaWar::HandlePlayerActions()
     
     PerformAction(_actionType, _mapCursorPosition);
     
-    while (_actingPlayer->IsBot() && !_inactivePlayer->IsBot())
+    while (GetActingPlayer()->IsBot() && !GetWaitingPlayer()->IsBot())
         PerformBotAction();
 }
 
@@ -162,7 +155,7 @@ void SeaWar::CheckAndHandleWin(std::shared_ptr<Player> winner, std::shared_ptr<P
 
 void SeaWar::PerformBotAction()
 {
-    const std::pair botAttackPosition = _inactivePlayer->GetMap()->GetRandomNotShotTile();
+    const std::pair<int, int> botAttackPosition = GetWaitingPlayer()->GetMap()->GetRandomNotShotTile();
     PerformAction(TurnActionType::Shoot, botAttackPosition);
 }
 
@@ -182,7 +175,7 @@ void SeaWar::PerformAction(const TurnActionType type, const std::pair<int, int> 
 
 void SeaWar::Shoot(const std::pair<int, int> position)
 {
-    const ShootingResult shootingResult = _inactivePlayer->ShootAtPosition(position);
+    const ShootingResult shootingResult = GetWaitingPlayer()->ShootAtPosition(position);
 
     if (shootingResult == ShootingResult::Miss)
         SwapActingPlayer();
@@ -190,16 +183,30 @@ void SeaWar::Shoot(const std::pair<int, int> position)
 
 void SeaWar::SwapActingPlayer()
 {
-    std::swap(_actingPlayer, _inactivePlayer);
+    isFirstPlayersTurn = !isFirstPlayersTurn;
 }
 
 void SeaWar::Scan(const std::pair<int, int> position) const
 {
-    if (_actingPlayer->TryConsumeRadarScan())
-        _inactivePlayer->ScanAtPosition(position);
+    if (GetActingPlayer()->TryConsumeRadarScan())
+        GetWaitingPlayer()->ScanAtPosition(position);
 }
 
 bool SeaWar::AreBothPlayersBots() const
 {
     return _firstPlayer->IsBot() && _secondPlayer->IsBot();
+}
+
+std::shared_ptr<Player> SeaWar::GetActingPlayer() const
+{
+    if (isFirstPlayersTurn)
+        return _firstPlayer;
+    return _secondPlayer;
+}
+
+std::shared_ptr<Player> SeaWar::GetWaitingPlayer() const
+{
+    if (isFirstPlayersTurn)
+        return _secondPlayer;
+    return _firstPlayer;
 }
